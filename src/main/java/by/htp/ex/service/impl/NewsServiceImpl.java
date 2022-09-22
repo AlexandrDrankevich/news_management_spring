@@ -10,6 +10,8 @@ import by.htp.ex.service.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+@Service
 public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();

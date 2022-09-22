@@ -1,4 +1,4 @@
-package by.htp.ex.controller.impl;
+package by.htp.ex.controller;
 
 import by.htp.ex.bean.NewUserInfo;
 import by.htp.ex.controller.constant.AttributeName;
