@@ -57,9 +57,10 @@
                     <c:if test="${not (param.regMessage eq null)}">
                         <c:out value="${reg_success}"/>
                     </c:if>
-                    
+                    <c:url var="registrationLink" value="/registration/showForm">
+								</c:url>
 
-                    <a href="/registration/showForm">${registration}</a>
+                    <a href="${registrationLink}">${registration}</a>
                     <input type="submit" value="${sign_in}"/><br/>
                 </form>
             </div>
