@@ -21,7 +21,9 @@
              var="content"/>
 
 <div class="body-title">
-    <a href="controller?command=go_to_news_list">${news_link} >> </a> ${view_news}
+<c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}"> ${news_link} >>  </a> ${view_news}
+   
 </div>
 
 <div class="add-table-margin">
@@ -65,19 +67,16 @@
 
 <c:if test="${sessionScope.role eq 'admin'}">
     <div class="first-view-button">
-        <form action="controller" method="post">
-            <input type="hidden" name="command" value="go_to_edit_news"/> <input
-                type="hidden" name="id" value="${requestScope.news.idNews }"/>
-            <input type="hidden" name="editView" value="active"/>
-            <input type="submit" value="${edit}"/>
-        </form>
-    </div>
+     <c:url var="editLink" value="/editNews/${requestScope.news.idNews }"> 
+     
+     <c:param name="editView" value="active" /> </c:url>
+        <a href="${editLink}"><input type="submit" value="${edit}"/></a>
+            </div>
 
     <div class="second-view-button">
-        <form action="controller" method="post">
-            <input type="hidden" name="command" value="do_delete_news"/>
-            <input type="hidden" name="id" value="${requestScope.news.idNews }"/>
-            <input type="submit" value="${delete}"/>
-        </form>
+    <c:url var="deleteLink" value="/deleteNews">
+     <c:param name="id" value="${requestScope.news.idNews }" /></c:url>
+        <a href="${deleteLink}"><input type="submit" value="${delete}"/></a>
+        
     </div>
 </c:if>

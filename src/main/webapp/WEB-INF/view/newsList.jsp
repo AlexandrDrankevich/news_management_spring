@@ -21,7 +21,7 @@
 <div class="body-title">
     <a href="">${news} >> </a>${news_list}
 </div>
-<form action="controller" method="post">
+<form action="deleteNews" method="post">
     <c:forEach var="news" items="${requestScope.news}">
         <div class="single-news-wrapper">
             <div class="single-news-header-wrapper">
@@ -38,9 +38,10 @@
                 <div class="news-link-to-wrapper">
                     <div class="link-position">
                         <c:if test="${sessionScope.role eq 'admin'}">
-                            <a href="controller?command=go_to_edit_news&id=${news.idNews}">${edit}&nbsp </a>
+                            <a href="editNews/${news.idNews}">${edit}&nbsp </a>
                         </c:if>
-                        <a href="controller?command=go_to_view_news&id=${news.idNews}&editView=active">${view} </a>
+                       
+                        <a href="viewNews/${news.idNews}">${view} </a>
                         <c:if test="${sessionScope.role eq 'admin'}">
                             <input type="checkbox" name="id" value="${news.idNews }" />
                         </c:if>
@@ -58,7 +59,7 @@
     </div>
     <c:if test="${(sessionScope.role eq 'admin')&&not(requestScope.news eq null)}">
         <div align="right">
-            <input type="hidden" name="command" value="do_delete_news"/>
+            
             <input type="submit" value="${delete}"/>
         </div>
     </c:if>

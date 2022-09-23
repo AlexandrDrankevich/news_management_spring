@@ -23,9 +23,12 @@
              var="content"/>
 
 <div class="body-title">
-    <a href="controller?command=go_to_news_list">${news_link} >>
+    <c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}">${news_link}</a> >>
         <c:if test="${param.editView eq 'active'}">
-        <a href="controller?command=go_to_view_news&id=${news.idNews}">${view_news} >>
+     <c:url var="viewnewsLink" value="/viewNews/${news.idNews}"></c:url>  
+        
+        <a href="${viewnewsLink}">${view_news} >>
             </c:if>
         </a>${edit_news}
 </div>

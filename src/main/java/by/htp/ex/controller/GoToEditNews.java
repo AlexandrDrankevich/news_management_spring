@@ -2,49 +2,49 @@ package by.htp.ex.controller;
 
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.Command;
 import by.htp.ex.controller.constant.PageName;
-import by.htp.ex.controller.constant.RequestParameterName;
+
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
-import by.htp.ex.service.ServiceProvider;
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
+@Controller
+public class GoToEditNews {
+	@Autowired
+	private NewsService newsService;
+	private static final Logger log = LogManager.getLogger(GoToEditNews.class);
 
-public class GoToEditNews  {
-    private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-    private static final Logger log = LogManager.getLogger(GoToEditNews.class);
+	@RequestMapping("/editNews/{id}")
+	public String editNews(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		String userRoleName = "admin";
+		if (session == null) {
+			return "redirect:/base_page";
+		}
+		if (!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+			return "redirect:/base_page";
+		}
 
-
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session=request.getSession(false);
-    	String userRoleName = "admin";
-        if(session==null) {
-        	response.sendRedirect(PageName.INDEX_PAGE);
-        	return;
-        }
-        if(!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
-        	response.sendRedirect(PageName.INDEX_PAGE);
-        	return;
-        }
-    	String id = request.getParameter(RequestParameterName.ID);
-        try {
-            String statusOfEdit = "active";
-            News news = newsService.findById(Integer.parseInt(id));
-            request.setAttribute(AttributeName.NEWS, news);
-            request.setAttribute(AttributeName.EDIT_NEWS, statusOfEdit);
-            session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
-            request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
-        } catch (ServiceException e) {
-            log.error(e);
-            response.sendRedirect(PageName.ERROR_PAGE);
-        }
-    }
+		try {
+			String statusOfEdit = "active";
+			News news = newsService.findById(Integer.parseInt(id));
+			request.setAttribute(AttributeName.NEWS, news);
+			request.setAttribute(AttributeName.EDIT_NEWS, statusOfEdit);
+			session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
+			return "baseLayout";
+		} catch (ServiceException e) {
+			log.error(e);
+			return "error";
+		}
+	}
 }

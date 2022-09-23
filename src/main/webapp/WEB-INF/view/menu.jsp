@@ -21,7 +21,8 @@
         <div class="list-menu-wrapper">
             <ul>
                 <li >
-                    <a href="controller?command=go_to_news_list">${list}</a><br/>
+                <c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}">${list}</a><br/>
                 </li>
                 <c:if test="${sessionScope.role eq 'admin'}">
                     <li>

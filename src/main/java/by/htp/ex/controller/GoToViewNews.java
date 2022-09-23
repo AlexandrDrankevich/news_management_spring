@@ -2,45 +2,43 @@ package by.htp.ex.controller;
 
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.Command;
+
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
-import by.htp.ex.service.ServiceProvider;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-
-public class GoToViewNews  {
-
-	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+@Controller
+public class GoToViewNews {
+	@Autowired
+	private NewsService newsService;
 	private static final Logger log = LogManager.getLogger(GoToViewNews.class);
 
-
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@RequestMapping("/viewNews/{id}")
+	public String viewNews(@PathVariable("id") String id,HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
-			response.sendRedirect(PageName.INDEX_PAGE);
-			return;
+			return "redirect:/base_page";
 		}
-		String id = request.getParameter(RequestParameterName.ID);
+		
 		String typeOfPresentation = "viewNews";
 		try {
 			News news = newsService.findById(Integer.parseInt(id));
 			request.setAttribute(AttributeName.NEWS, news);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
 			session.setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
-			request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
+			return "baseLayout";
 		} catch (ServiceException e) {
 			log.error(e);
-			response.sendRedirect(PageName.ERROR_PAGE);
+			return "error";
 		}
 	}
 }

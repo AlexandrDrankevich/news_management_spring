@@ -44,9 +44,9 @@ public class DoSIgnIn {
 				model.addAttribute("user", userStatusActive);
 				model.addAttribute("role", role);
 				return "redirect:/newsList";
-				// response.sendRedirect(PageName.NEWS_LIST_PAGE);
+				
 			} else {
-				model.addAttribute("user", userStatusActive);
+				model.addAttribute("user", userStatusNotActive);
 				// session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
 				attr.addAttribute("AuthenticationError", "wrong login or password");
 				return "redirect:/base_page";
