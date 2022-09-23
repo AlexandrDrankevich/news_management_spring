@@ -17,5 +17,5 @@ public interface NewsService {
 
 	News findById(int id) throws ServiceException;
 
-	List<Integer> getPageCount();
+	List<Integer> getPageCount(String newsCount) throws ServiceException;
 }

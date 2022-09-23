@@ -65,13 +65,26 @@
     <br/><div align="center">
      <c:if test="${requestScope.PageCount.size()>1}">
      <c:forEach var="pageNumber" items="${requestScope.PageCount}">
-          <a href="controller?command=go_to_news_list&pageNumber=${pageNumber}">${pageNumber}&nbsp </a>
+     
+     <c:url var="pageLink" value="/newsList"> 
+     <c:param name="pageNumber" value="${pageNumber}" /></c:url>
+                    <a href="${pageLink}">${pageNumber}&nbsp</a>
+          
         </c:forEach>
              </c:if>
                </div>
       <c:if test="${requestScope.news.size()>4}">
 		<br /> ${news_on_page}
-        <a href="controller?command=go_to_news_list&newsCount=5&pageNumber=1">5</a>
-		<a href="controller?command=go_to_news_list&newsCount=10&pageNumber=1">10</a>
+		 <c:url var="newsNumberLink5" value="/newsList"> 
+     <c:param name="pageNumber" value="1" />
+     <c:param name="newsCount" value="5" />
+     </c:url>
+     
+      <c:url var="newsNumberLink10" value="/newsList"> 
+     <c:param name="pageNumber" value="1" />
+     <c:param name="newsCount" value="10" />
+     </c:url>
+        <a href="${newsNumberLink5}">5</a>
+		<a href="${newsNumberLink10}">10</a>
 	</c:if>
 </form>

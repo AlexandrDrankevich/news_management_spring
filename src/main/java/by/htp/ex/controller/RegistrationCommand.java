@@ -55,7 +55,6 @@ public class RegistrationCommand {
 			}
 		} catch (ServiceException e) {
 			log.error(e);
-			System.out.println("error");
 			return "redirect:/base_page";
 		}
 	}

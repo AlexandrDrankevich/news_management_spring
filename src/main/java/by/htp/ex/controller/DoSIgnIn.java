@@ -1,51 +1,59 @@
 package by.htp.ex.controller;
 
 import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.Command;
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.ServiceException;
-import by.htp.ex.service.ServiceProvider;
 import by.htp.ex.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
-public class DoSIgnIn  {
+@Controller
+@SessionAttributes({"user", "role","login"})
+public class DoSIgnIn {
+	@Autowired
+	private UserService service;
+	private static final Logger log = LogManager.getLogger(DoSIgnIn.class);
 
-    private final UserService service = ServiceProvider.getInstance().getUserService();
-    private static final Logger log = LogManager.getLogger(DoSIgnIn.class);
+	@RequestMapping("/signIn")
+	public String signIn(@RequestParam("login") String login, @RequestParam("password") String password,
+			 RedirectAttributes attr, Model model)
+			throws ServletException, IOException {
 
-
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String login = request.getParameter(RequestParameterName.LOGIN);
-        String password = request.getParameter(RequestParameterName.PASSWORD);
-        String userRoleName = "guest";
-        String userStatusActive = "active";
-        String userStatusNotActive = "not active";
-        HttpSession session=request.getSession(true);
-        try {
-            String role = service.signIn(login, password);
-            if (!role.equals(userRoleName)) {
-            	session.setAttribute(AttributeName.LOGIN, login);
-            	session.setAttribute(AttributeName.USER, userStatusActive);
-            	session.setAttribute(AttributeName.USER_ROLE, role);
-                response.sendRedirect(PageName.NEWS_LIST_PAGE);
-            } else {
-            	session.setAttribute(AttributeName.USER, userStatusNotActive);
-            	session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
-                response.sendRedirect(PageName.BASE_PAGE + "&AuthenticationError=wrong login or password");
-            }
-        } catch (ServiceException e) {
-            log.error(e);
-            response.sendRedirect(PageName.INDEX_PAGE);
-        }
-    }
+		String userRoleName = "guest";
+		String userStatusActive = "active";
+		String userStatusNotActive = "not active";
+		try {
+			String role = service.signIn(login, password);
+			if (!role.equals(userRoleName)) {
+				model.addAttribute("login", login);
+				model.addAttribute("user", userStatusActive);
+				model.addAttribute("role", role);
+				return "redirect:/newsList";
+				// response.sendRedirect(PageName.NEWS_LIST_PAGE);
+			} else {
+				model.addAttribute("user", userStatusActive);
+				// session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+				attr.addAttribute("AuthenticationError", "wrong login or password");
+				return "redirect:/base_page";
+			}
+		} catch (ServiceException e) {
+			log.error(e);
+			return "redirect:/base_page";
+		}
+	}
 }

@@ -41,7 +41,7 @@
         <c:if test="${not (sessionScope.user eq 'active')}">
 
             <div align="right">
-                <form action="controller" method="post">
+                <form action="signIn" method="post">
                     <input type="hidden" name="command" value="do_sign_in"/>
                         ${login} <input type="text" name="login" value="" required
                                         pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}"/><br/>${password} <input
@@ -70,9 +70,8 @@
         <c:if test="${sessionScope.user eq 'active'}">
 
             <div align="right">
-                <form action="controller" method="post">
-                    <input type="hidden" name="command" value="do_sign_out"/> <input
-                        type="submit" value="${sign_out}"/><br/>
+                <form action="signOut" method="post">
+                    <input type="submit" value="${sign_out}"/><br/>
                     <c:if test="${not (param.newsMessage eq null)}">
                         <c:out value="${news_saved}"/>
                     </c:if>

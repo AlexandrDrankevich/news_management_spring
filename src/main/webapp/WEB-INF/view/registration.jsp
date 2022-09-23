@@ -48,12 +48,13 @@
         <br/>
         <div>
             <label for="birthday">${birthday}</label>
-             <form:input  type="date" path="birthday" class="form-control"/>
+             <form:input  type="date" path="birthday" class="form-control" required="required"/>
         </div>
         <br/>
         <div>
-            <label for="password">${password}</label>
-          <form:input type="password"  id="password" path="password" class="form-control"/>
+            <label for="password">${password} </label>
+          <form:input type="password"  id="password" path="password" class="form-control" required="required" 
+          pattern="[A-Z a-z 0-9]+"/>
         </div>
         <br/>
         <div>
