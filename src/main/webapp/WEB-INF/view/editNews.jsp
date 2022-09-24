@@ -66,14 +66,16 @@
 
     <c:if test="${not (param.editView eq 'active')}">
         <div class="second-view-button">
-            <a href="controller?command=go_to_news_list"><input type="submit"
-                                                                value="${cancel}"/></a>
+           <c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}"><input type="submit"value="${cancel}"/></a>
         </div>
     </c:if>
     <c:if test="${param.editView eq 'active'}">
         <div class="second-view-button">
-            <a href="controller?command=go_to_view_news&id=${news.idNews}"><input
-                    type="submit" value="${cancel}"/></a>
+        <c:url var="viewnewsLink" value="/viewNews/${news.idNews}"></c:url>  
+        
+        <a href="${viewnewsLink}">
+           <input type="submit" value="${cancel}"/></a>
         </div>
     </c:if>
 </div>

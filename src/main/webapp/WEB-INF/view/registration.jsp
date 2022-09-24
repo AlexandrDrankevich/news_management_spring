@@ -22,7 +22,9 @@
              var="news_link"/>
 
 <div class="body-title">
-    <a href="controller?command=go_to_base_page&regUrl=delete">${news_link} >> </a> ${registration}
+<c:url var="basePageLink" value="/base_page">
+<c:param name="regUrl" value="delete"></c:param></c:url>
+    <a href="${ basePageLink}">${news_link} >> </a> ${registration}
 </div>
 
 <div class="reg-form-body">

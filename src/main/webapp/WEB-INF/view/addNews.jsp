@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:setBundle basename="localization.local" var="loc"/>
@@ -21,39 +22,41 @@
              var="content"/>
 
 <div class="body-title">
-    <a href="controller?command=go_to_news_list">${news_link} >> </a> ${add_news}
+    <c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}">${news_link} >> </a> ${add_news}
 </div>
 <br/>
 <div align="center">
-    <form action="controller" method="post">
-        <input type="hidden" name="command" value="do_add_news"/>
+    <form:form  action="addNews" modelAttribute="news">
+
         <div>
             <label for=title>${title}&nbsp </label>
-            <input type="text" name="title" id="title" class="form-addnews" value="" maxlength="100" required/>
+            <form:input type="text" path="title" id="title" class="form-addnews"  maxlength="100" required="required"/>
         </div>
         <br/>
         <div>
             <label for=date>${date} &nbsp</label>
-            <input type="date" name="date" id="date" class="form-addnews" min="2022-01-01" max="2030-01-01" required/>
+            <form:input type="date" path="newsDate" id="date" class="form-addnews" min="2022-01-01" max="2030-01-01" required="required"/>
         </div>
         <br/>
         <p class="formfield">
             <label for="brief">${brief} &nbsp</label>
-            <textarea name="brief" id="brief" class="form-addnews" maxlength="500" required></textarea>
+            <form:textarea path="briefNews" id="brief" class="form-addnews" maxlength="500" required="required"/>
         </p>
         <br/>
         <p class="formfield">
             <label for="content">${content} </label>
-            <textarea name="content" id="content" class="form-content" maxlength="2048" required></textarea>
+            <form:textarea path="content" id="content" class="form-content" maxlength="2048" required="required"/>
         </p>
         <br/>
         <div class="first-view-button">
             <input type="submit" value="${save}"/>
         </div>
-    </form>
+    </form:form>
 
     <div class="second-view-button">
-        <a href="controller?command=go_to_news_list"><input type="submit" value="${cancel}"/></a>
+       <c:url var="newsLink" value="/newsList"/> 
+                    <a href="${newsLink}"><input type="submit" value="${cancel}"/></a>
     </div>
 </div>
 
