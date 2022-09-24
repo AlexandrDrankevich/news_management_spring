@@ -6,6 +6,8 @@
 <fmt:setBundle basename="localization.local" var="loc"/>
 <fmt:message bundle="${loc}" key="local.loclink.name.news"
              var="news_link"/>
+ <fmt:message bundle="${loc}" key="local.loclink.name.edit_news"
+             var="edit_news"/>
 <fmt:message bundle="${loc}" key="local.loclink.name.add_news"
              var="add_news"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.save"
@@ -23,7 +25,9 @@
 
 <div class="body-title">
     <c:url var="newsLink" value="/newsList"/> 
-                    <a href="${newsLink}">${news_link} >> </a> ${add_news}
+                    <a href="${newsLink}">${news_link} >> </a>
+                    <c:if test="${not(param.editView eq 'active')}"> ${add_news}</c:if>
+                    <c:if test="${param.editView eq 'active'}"> ${edit_news}</c:if>
 </div>
 <br/>
 <div align="center">

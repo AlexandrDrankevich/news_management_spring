@@ -15,8 +15,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GoToEditNews {
@@ -25,7 +27,7 @@ public class GoToEditNews {
 	private static final Logger log = LogManager.getLogger(GoToEditNews.class);
 
 	@RequestMapping("/editNews/{id}")
-	public String editNews(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
+	public String showEditNewsForm(@PathVariable("id") String id, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
 		String userRoleName = "admin";
 		if (session == null) {
@@ -36,11 +38,12 @@ public class GoToEditNews {
 		}
 
 		try {
-			String statusOfEdit = "active";
-			News news = newsService.findById(Integer.parseInt(id));
-			request.setAttribute(AttributeName.NEWS, news);
-			request.setAttribute(AttributeName.EDIT_NEWS, statusOfEdit);
-			session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
+		    News news = newsService.findById(Integer.parseInt(id));
+			model.addAttribute("news", news);
+			String editNewsStatus = "active";
+			request.setAttribute(AttributeName.ADD_NEWS, editNewsStatus);
+			model.addAttribute("editView", editNewsStatus);
+            //session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
 			return "baseLayout";
 		} catch (ServiceException e) {
 			log.error(e);
