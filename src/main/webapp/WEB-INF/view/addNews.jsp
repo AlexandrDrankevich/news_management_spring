@@ -26,15 +26,17 @@
 <div class="body-title">
     <c:url var="newsLink" value="/newsList"/> 
                     <a href="${newsLink}">${news_link} >> </a>
-                    <c:if test="${not(param.editView eq 'active')}"> ${add_news}</c:if>
-                    <c:if test="${param.editView eq 'active'}"> ${edit_news}</c:if>
+                    <c:if test="${not(editView eq 'active')}"> ${add_news}</c:if>
+                    <c:if test="${editView eq 'active'}"> ${edit_news}</c:if>
 </div>
 <br/>
 <div align="center">
-    <form:form  action="addNews" modelAttribute="news">
-
+ <c:url var="addNews" value="/addNews"/> 
+    <form:form  action="${addNews}" modelAttribute="news">
+   <form:hidden path="idNews" />
         <div>
             <label for=title>${title}&nbsp </label>
+            
             <form:input type="text" path="title" id="title" class="form-addnews"  maxlength="100" required="required"/>
         </div>
         <br/>

@@ -67,9 +67,7 @@
 
 <c:if test="${sessionScope.role eq 'admin'}">
     <div class="first-view-button">
-     <c:url var="editLink" value="/editNews/${requestScope.news.idNews }"> 
-     
-     <c:param name="editView" value="active" /> </c:url>
+     <c:url var="editLink" value="/editNews/${requestScope.news.idNews }"> </c:url>
         <a href="${editLink}"><input type="submit" value="${edit}"/></a>
             </div>
 
