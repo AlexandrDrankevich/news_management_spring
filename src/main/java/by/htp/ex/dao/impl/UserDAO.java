@@ -32,9 +32,9 @@ public class UserDAO implements IUserDAO {
 			Query<NewUserInfo> query = currentSession.createQuery("from NewUserInfo v where v.login=:login",
 					NewUserInfo.class);
 			query.setParameter("login", login);
+			//NewUserInfo user=query.uniqueResult();
 			if (query.uniqueResult() != null) {
-				query.uniqueResult().getPassword();
-				return checkPassword(query.uniqueResult().getPassword(), password);
+			return checkPassword(query.uniqueResult().getPassword(), password);
 			}
 		} catch (Exception e) {
 			throw new DaoException(e);
@@ -45,15 +45,13 @@ public class UserDAO implements IUserDAO {
 	
 
 	public String getRole(String login) throws DaoException {
-		String userRole="admin";
-		try {
-			
-			userRole="admin";
-		} catch (Exception e) {
-			throw new DaoException(e);
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<NewUserInfo> query = currentSession.createQuery("from NewUserInfo v where v.login=:login",
+				NewUserInfo.class);
+		query.setParameter("login", login);
+		return query.uniqueResult().getUserRole().getRole();
 		}
-		return userRole;
-	}
 
 	@Override
 	public boolean registration(NewUserInfo user) throws DaoException {
