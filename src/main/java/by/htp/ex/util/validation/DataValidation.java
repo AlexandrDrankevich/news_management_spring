@@ -1,10 +1,10 @@
 package by.htp.ex.util.validation;
 
-import by.htp.ex.bean.NewUserInfo;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import by.htp.ex.entity.NewUserInfo;
 
 public class DataValidation {
 
@@ -56,7 +56,7 @@ public class DataValidation {
         }
 
         public Builder checkRegData(NewUserInfo user) {
-            String birthday = user.getBirthday();
+            String birthday = user.getBirthday().toString();
             String login = user.getLogin();
             String name = user.getName();
             String surname = user.getSurname();

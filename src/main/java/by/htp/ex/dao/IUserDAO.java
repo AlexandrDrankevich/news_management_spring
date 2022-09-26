@@ -1,6 +1,6 @@
 package by.htp.ex.dao;
 
-import by.htp.ex.bean.NewUserInfo;
+import by.htp.ex.entity.NewUserInfo;
 
 public interface IUserDAO {
     boolean logination(String login, String password) throws DaoException;

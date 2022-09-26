@@ -1,87 +1,81 @@
 package by.htp.ex.dao.impl;
 
-import by.htp.ex.bean.News;
 import by.htp.ex.dao.INewsDAO;
 import by.htp.ex.dao.NewsDAOException;
-import by.htp.ex.dao.connectionpool.ConnectionPool;
-import by.htp.ex.dao.connectionpool.ConnectionPoolException;
+
+import by.htp.ex.entity.News;
 import by.htp.ex.util.date.DateUtil;
+
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsDAO implements INewsDAO {
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class NewsDAO implements INewsDAO {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+			
     private static final String newsColumnLabelId = "id";
     private static final String newsColumnLabelTitle = "title";
     private static final String newsColumnLabelBrief = "brief";
     private static final String newsColumnLabelContent = "content";
     private static final String newsColumnLabelDate = "date";
-
-    public static final String latestNews = "SELECT * FROM news order by date DESC limit ?";
+    
+    
 
     @Override
     public List<News> getLatestsList(int count) throws NewsDAOException {
-        List<News> result = new ArrayList<News>();
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement ps = connection.prepareStatement(latestNews)) {
-            ps.setInt(1, count);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                result.add(new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief),
-                        rs.getString(newsColumnLabelContent), DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate))));
-            }
-        } catch (SQLException e) {
-            throw new NewsDAOException(e);
-        } catch (ConnectionPoolException e) {
-            throw new NewsDAOException(e);
-        }
-        return result;
+    	Session currentSession = sessionFactory.getCurrentSession();
+    	Query<News> theQuery = 
+				currentSession.createQuery("from News order by date desc", News.class);
+    	theQuery.setMaxResults(count);
+			List<News> news = theQuery.getResultList();
+		return news;
     }
-
-    public static final String allNews = "SELECT * FROM news order by date DESC";
 
     @Override
     public List<News> getList() throws NewsDAOException {
-        List<News> result = new ArrayList<News>();
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(allNews);
-            while (rs.next()) {
-                result.add(new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief),
-                        rs.getString(newsColumnLabelContent), DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate))));
-            }
-        } catch (SQLException e) {
-            throw new NewsDAOException(e);
-        } catch (ConnectionPoolException e) {
-            throw new NewsDAOException(e);
-        }
+    	Session currentSession = sessionFactory.getCurrentSession();
+    	Query<News> theQuery = 
+				currentSession.createQuery("from News order by date desc", News.class);
+  			List<News> result = theQuery.getResultList();
         return result;
     }
 
-    public static final String newsById = "SELECT * FROM news where id=?";
+  
 
     @Override
     public News fetchById(int id) throws NewsDAOException {
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement ps = connection.prepareStatement(newsById)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief), rs.getString(newsColumnLabelContent),
-                    DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate)));
-        } catch (SQLException e) {
-            throw new NewsDAOException(e);
-        } catch (ConnectionPoolException e) {
+        try {
+        	Session currentSession = sessionFactory.getCurrentSession();
+        	return currentSession.get(News.class, id);
+                
+        } catch (Exception e) {
             throw new NewsDAOException(e);
         }
     }
 
-    private static final String addNews = "INSERT INTO news(title, brief,content,date,reporter_id) values(?,?,?,?,?)";
+    
 
     @Override
     public void addNews(News news, String login) throws NewsDAOException {
+    	System.out.println(news.getIdNews());
+	Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.saveOrUpdate(news);
+		System.out.println(news.getIdNews());
+    	
+    }
+   /* 
+    * private static final String addNews = "INSERT INTO news(title, brief,content,date,reporter_id) values(?,?,?,?,?)";
+    * public void addNews(News news, String login) throws NewsDAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement ps = connection.prepareStatement(addNews, Statement.RETURN_GENERATED_KEYS)) {
             int userId = getUserId(connection, login);
@@ -100,7 +94,7 @@ public class NewsDAO implements INewsDAO {
         } catch (ConnectionPoolException e) {
             throw new NewsDAOException(e);
         }
-    }
+    }*/
 
     private static final String updateNews = "UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=? WHERE id=?";
 

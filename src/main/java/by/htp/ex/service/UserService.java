@@ -1,6 +1,6 @@
 package by.htp.ex.service;
 
-import by.htp.ex.bean.NewUserInfo;
+import by.htp.ex.entity.NewUserInfo;
 
 public interface UserService {
 

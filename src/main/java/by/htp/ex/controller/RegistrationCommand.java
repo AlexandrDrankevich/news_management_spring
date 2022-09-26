@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import by.htp.ex.bean.NewUserInfo;
 import by.htp.ex.controller.constant.AttributeName;
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
+import by.htp.ex.entity.NewUserInfo;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.UserService;
 

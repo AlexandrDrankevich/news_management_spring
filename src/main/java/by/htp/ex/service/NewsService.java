@@ -1,8 +1,8 @@
 package by.htp.ex.service;
 
-import by.htp.ex.bean.News;
-
 import java.util.List;
+
+import by.htp.ex.entity.News;
 
 public interface NewsService {
 	void save(News news, String login) throws ServiceException;

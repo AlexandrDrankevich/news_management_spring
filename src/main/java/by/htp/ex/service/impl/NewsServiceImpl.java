@@ -1,22 +1,26 @@
 package by.htp.ex.service.impl;
 
-import by.htp.ex.bean.News;
-import by.htp.ex.dao.DaoProvider;
+
 import by.htp.ex.dao.INewsDAO;
 import by.htp.ex.dao.NewsDAOException;
+import by.htp.ex.entity.News;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class NewsServiceImpl implements NewsService {
-	
-private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
+@Autowired	
+private  INewsDAO newsDAO;
 
 	@Override
+	@Transactional
 	public List<News> latestList(int count) throws ServiceException {
 		try {
 			List<News> latestNews = newsDAO.getLatestsList(count);
@@ -30,6 +34,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public List<News> list(Integer pageNumber, String newsCountOnPage) throws ServiceException {
 		String newsCount = checkNewsCount(newsCountOnPage);
 		try {
@@ -41,6 +46,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public News findById(int id) throws ServiceException {
 		try {
 			return newsDAO.fetchById(id);
@@ -50,6 +56,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public void save(News news, String login) throws ServiceException {
 		try {
 			newsDAO.addNews(news, login);
@@ -59,6 +66,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public List<Integer> getPageCount(String newsCountOnPage) throws ServiceException {
 		String newsCount = checkNewsCount(newsCountOnPage);
 		try {
@@ -69,6 +77,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public void delete(String[] idNews) throws ServiceException {
 		try {
 			newsDAO.deleteNews(idNews);
@@ -78,6 +87,7 @@ private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	}
 
 	@Override
+	@Transactional
 	public void update(News news, String login) throws ServiceException {
 		try {
 			newsDAO.updateNews(news, login);

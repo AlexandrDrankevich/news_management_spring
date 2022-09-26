@@ -1,9 +1,9 @@
 package by.htp.ex.controller;
 
-import by.htp.ex.bean.News;
 import by.htp.ex.controller.constant.AttributeName;
 
 import by.htp.ex.controller.constant.PageName;
+import by.htp.ex.entity.News;
 
 import javax.servlet.http.HttpServletRequest;
 
