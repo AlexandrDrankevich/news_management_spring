@@ -58,7 +58,7 @@ public class NewsDAO implements INewsDAO {
 
 	@Override
 	public void addNews(News news, String login) throws NewsDAOException {
-		Session currentSession = sessionFactory.getCurrentSession();
+			Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(news);
 
 	}
