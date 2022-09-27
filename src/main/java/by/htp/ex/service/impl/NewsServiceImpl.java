@@ -57,9 +57,9 @@ private  INewsDAO newsDAO;
 
 	@Override
 	@Transactional
-	public void save(News news, String login) throws ServiceException {
+	public void save(News news) throws ServiceException {
 		try {
-			newsDAO.addNews(news, login);
+			newsDAO.saveUpdateNews(news);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -86,15 +86,6 @@ private  INewsDAO newsDAO;
 		}
 	}
 
-	@Override
-	@Transactional
-	public void update(News news, String login) throws ServiceException {
-		try {
-			newsDAO.updateNews(news, login);
-		} catch (NewsDAOException e) {
-			throw new ServiceException(e);
-		}
-	}
 
 	private List<Integer> createPageCountList(List<News> allNewsList, String newsCount) {
 		double numberNews = Double.parseDouble(newsCount);

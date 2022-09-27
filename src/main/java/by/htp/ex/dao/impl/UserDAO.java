@@ -3,7 +3,7 @@ package by.htp.ex.dao.impl;
 import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 
-import by.htp.ex.entity.NewUserInfo;
+import by.htp.ex.entity.UserInfo;
 import by.htp.ex.util.date.DateUtil;
 
 import org.hibernate.Session;
@@ -26,55 +26,50 @@ public class UserDAO implements IUserDAO {
 	private static final int saltLength = 30;
 
 	@Override
-	public boolean logination(String login, String password) throws DaoException {
+	public UserInfo logination(String login, String password) throws DaoException {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
-			Query<NewUserInfo> query = currentSession.createQuery("from NewUserInfo v where v.login=:login",
-					NewUserInfo.class);
+			Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
+					UserInfo.class);
 			query.setParameter("login", login);
-			//NewUserInfo user=query.uniqueResult();
-			if (query.uniqueResult() != null) {
-			return checkPassword(query.uniqueResult().getPassword(), password);
+			UserInfo user=query.uniqueResult();
+			if (user != null) {
+			return user=checkUserByPassword(user, password);
 			}
 		} catch (Exception e) {
 			throw new DaoException(e);
 		}
-		return false;
+		return null;
 	}
 
-	
-
-	public String getRole(String login) throws DaoException {
-		
-		Session currentSession = sessionFactory.getCurrentSession();
-		Query<NewUserInfo> query = currentSession.createQuery("from NewUserInfo v where v.login=:login",
-				NewUserInfo.class);
-		query.setParameter("login", login);
-		return query.uniqueResult().getUserRole().getRole();
-		}
 
 	@Override
-	public boolean registration(NewUserInfo user) throws DaoException {
+	public boolean registration(UserInfo user) throws DaoException {
 		Session currentSession = sessionFactory.getCurrentSession();
 		try {
 			if (isloginExist(currentSession, user.getLogin())) {
 				return false;
 			}
-			currentSession.save(user);
+			System.out.println(user.getId());
+			currentSession.saveOrUpdate(user);
 		} catch (Exception e) {
 			throw new DaoException(e);
 		}
 		return true;
 	}
 
-	private boolean checkPassword(String hashPasswordDataBase, String password) {
+	private UserInfo checkUserByPassword(UserInfo user, String password) {
+		String hashPasswordDataBase=user.getPassword();
 		String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
-		return hashPasswordDataBase.equals(hashPassword);
+		if( hashPasswordDataBase.equals(hashPassword)) {
+			return user;
+		}
+		return null;
 	}
 
 	private boolean isloginExist(Session currentSession, String login) {
-		Query<NewUserInfo> query = currentSession.createQuery("from NewUserInfo v where v.login=:login",
-				NewUserInfo.class);
+		Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
+				UserInfo.class);
 		query.setParameter("login", login);
 		return query.uniqueResult() != null;
 

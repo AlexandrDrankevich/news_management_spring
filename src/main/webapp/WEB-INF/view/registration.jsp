@@ -29,6 +29,7 @@
 
 <div class="reg-form-body">
     <form:form action="do_registration" modelAttribute="newUserInfo">
+     <form:hidden path="id" />
         <div>
             <label for="name">${name} </label>
             <form:input  path="name"  class="form-control" required="required" pattern="[A-Z a-z]+"/>

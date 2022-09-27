@@ -20,7 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import by.htp.ex.controller.constant.AttributeName;
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
-import by.htp.ex.entity.NewUserInfo;
+import by.htp.ex.entity.UserInfo;
+import by.htp.ex.entity.UserRole;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.UserService;
 
@@ -33,17 +34,20 @@ public class RegistrationCommand {
 	private static final Logger log = LogManager.getLogger(UserService.class);
 
 	@RequestMapping("/showForm")
-	public String showForm(@ModelAttribute("newUserInfo") NewUserInfo newUserInfo, Model model) {
+	public String showForm(@ModelAttribute("newUserInfo") UserInfo newUserInfo, Model model) {
 		model.addAttribute("reg", "reg");
 		return "baseLayout";
 	}
 
 	@RequestMapping("/do_registration")
-	public String doRegistration(@ModelAttribute("newUserInfo") NewUserInfo newUserInfo, RedirectAttributes attr) {
+	public String doRegistration(@ModelAttribute("newUserInfo") UserInfo newUserInfo, RedirectAttributes attr) {
 
 		String hashPassword = BCrypt.hashpw(newUserInfo.getPassword(), BCrypt.gensalt());
 		newUserInfo.setPassword(hashPassword);
 		try {
+			UserRole defaultUserRole = new UserRole();
+			defaultUserRole.setId(2);
+			newUserInfo.setUserRole(defaultUserRole);
 			boolean result = service.registration(newUserInfo);
 			if (result) {
 				attr.addAttribute("regMessage", "Successful registration!");

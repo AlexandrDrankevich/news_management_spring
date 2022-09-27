@@ -1,11 +1,10 @@
 package by.htp.ex.dao;
 
-import by.htp.ex.entity.NewUserInfo;
+import by.htp.ex.entity.UserInfo;
 
 public interface IUserDAO {
-    boolean logination(String login, String password) throws DaoException;
+	UserInfo logination(String login, String password) throws DaoException;
 
-    boolean registration(NewUserInfo user) throws DaoException;
+    boolean registration(UserInfo user) throws DaoException;
 
-    String getRole(String login) throws DaoException;
 }

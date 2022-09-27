@@ -28,17 +28,29 @@ public class News implements Serializable {
 	private String content;
 	@Column(name = "date")
 	private java.sql.Date newsDate;
+	@Column(name = "reporter_id")
+	private int reporterId;
 
 	public News() {
+	}
+	
+	public int getReporterId() {
+		return reporterId;
+	}
+
+	public void setReporterId(int reporterId) {
+		this.reporterId = reporterId;
 	}
 
 	public Integer getIdNews() {
 		return idNews;
 	}
-
-	public void setIdNews(Integer idNews) {
+	
+	public void setIdNews(int idNews) {
 		this.idNews = idNews;
 	}
+
+	
 
 	public String getTitle() {
 		return title;

@@ -5,9 +5,7 @@ import java.util.List;
 import by.htp.ex.entity.News;
 
 public interface NewsService {
-	void save(News news, String login) throws ServiceException;
-
-	void update(News news, String login) throws ServiceException;
+	void save(News news) throws ServiceException;
 
 	void delete(String[] idNews) throws ServiceException;
 

@@ -14,9 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 @Table(name = "users")
-public class NewUserInfo implements Serializable {
+public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +38,7 @@ public class NewUserInfo implements Serializable {
 	@Column(name = "birthday")
 	private java.sql.Date birthday;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 			 CascadeType.DETACH, CascadeType.REFRESH})
 @JoinColumn(name="roles_id")
 private UserRole userRole;
@@ -50,7 +52,7 @@ private UserRole userRole;
 		this.userRole = userRole;
 	}
 
-	public NewUserInfo() {
+	public UserInfo() {
 	}
 
 	public java.sql.Date getBirthday() {
@@ -114,7 +116,7 @@ private UserRole userRole;
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NewUserInfo other = (NewUserInfo) obj;
+		UserInfo other = (UserInfo) obj;
 		return Objects.equals(birthday, other.birthday) && id == other.id && Objects.equals(login, other.login)
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(surname, other.surname);

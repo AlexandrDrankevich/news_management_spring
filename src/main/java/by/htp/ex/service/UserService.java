@@ -1,10 +1,10 @@
 package by.htp.ex.service;
 
-import by.htp.ex.entity.NewUserInfo;
+import by.htp.ex.entity.UserInfo;
 
 public interface UserService {
 
-    String signIn(String login, String password) throws ServiceException;
+	UserInfo signIn(String login, String password) throws ServiceException;
 
-    boolean registration(NewUserInfo user) throws ServiceException;
+	boolean registration(UserInfo user) throws ServiceException;
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import by.htp.ex.entity.NewUserInfo;
+import by.htp.ex.entity.UserInfo;
 
 public class DataValidation {
 
@@ -55,7 +55,7 @@ public class DataValidation {
             return (this);
         }
 
-        public Builder checkRegData(NewUserInfo user) {
+        public Builder checkRegData(UserInfo user) {
             String birthday = user.getBirthday().toString();
             String login = user.getLogin();
             String name = user.getName();

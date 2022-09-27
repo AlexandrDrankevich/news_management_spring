@@ -15,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "roles")
 public class UserRole implements Serializable {
@@ -31,12 +29,7 @@ public class UserRole implements Serializable {
 	@Column(name = "title")
 	private String role;
 	
-	@OneToMany(fetch=FetchType.LAZY,
-			   mappedBy="userRole",
-			   cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-						 CascadeType.DETACH, CascadeType.REFRESH})
-	private List<NewUserInfo> newUserInfo;
-	
+
 	public UserRole() {
 
 	}

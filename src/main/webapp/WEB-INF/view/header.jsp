@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:setBundle basename="localization.local" var="loc"/>
@@ -34,8 +35,9 @@
     <div class="local-link">
 
         <div align="right">
-            <a href="controller?command=do_change_local&local=en">${en_button}</a> &nbsp;&nbsp; <a
-                href="controller?command=do_change_local&local=ru">${ru_button}</a> <br/> <br/>
+            <a href="?languageVar=en">
+<spring:message code="local.locbutton.name.en"/></a> &nbsp;&nbsp; 
+<a href="?languageVar=ru"><spring:message code="local.locbutton.name.ru"/></a> <br/> <br/>
         </div>
 
         <c:if test="${not (sessionScope.user eq 'active')}">
@@ -70,8 +72,8 @@
         <c:if test="${sessionScope.user eq 'active'}">
 
             <div align="right">
-                <form action="signOut" method="post">
-                    <input type="submit" value="${sign_out}"/><br/>
+            <c:url var="signOut" value="/signOut"/>    
+                    <a href="${signOut}"> <input type="submit" value="${sign_out}"/><br/></a>
                     <c:if test="${not (param.newsMessage eq null)}">
                         <c:out value="${news_saved}"/>
                     </c:if>

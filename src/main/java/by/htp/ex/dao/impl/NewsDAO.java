@@ -22,12 +22,6 @@ public class NewsDAO implements INewsDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private static final String newsColumnLabelId = "id";
-	private static final String newsColumnLabelTitle = "title";
-	private static final String newsColumnLabelBrief = "brief";
-	private static final String newsColumnLabelContent = "content";
-	private static final String newsColumnLabelDate = "date";
-
 	@Override
 	public List<News> getLatestsList(int count) throws NewsDAOException {
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -50,19 +44,17 @@ public class NewsDAO implements INewsDAO {
 		try {
 			Session currentSession = sessionFactory.getCurrentSession();
 			return currentSession.get(News.class, id);
-
 		} catch (Exception e) {
 			throw new NewsDAOException(e);
 		}
 	}
 
 	@Override
-	public void addNews(News news, String login) throws NewsDAOException {
-			Session currentSession = sessionFactory.getCurrentSession();
+	public void saveUpdateNews(News news) throws NewsDAOException {
+		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(news);
 
 	}
-
 
 	@Override
 	public void deleteNews(String[] idNews) throws NewsDAOException {
@@ -73,4 +65,6 @@ public class NewsDAO implements INewsDAO {
 			theQuery.executeUpdate();
 		}
 	}
+
+
 }
