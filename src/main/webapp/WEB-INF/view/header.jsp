@@ -43,7 +43,8 @@
         <c:if test="${not (sessionScope.user eq 'active')}">
 
             <div align="right">
-                <form action="signIn" method="post">
+             <c:url var="signIn" value="/signIn"></c:url>
+                <form action="${signIn}" method="post">
                     <input type="hidden" name="command" value="do_sign_in"/>
                         ${login} <input type="text" name="login" value="" required
                                         pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}"/><br/>${password} <input
