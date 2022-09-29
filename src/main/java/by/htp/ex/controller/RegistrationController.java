@@ -31,16 +31,23 @@ public class RegistrationController {
 
 	@Autowired
 	private UserService service;
+	private static final String userInfoAttribute = "newUserInfo";
+	private static final String regResultMessageAttribute = "regMessage";
+	private static final String messageLoginExistAttribute = "messageLoginExist";
+	private static final String registrationAttribute = "reg";
+	private static final String regStatus = "active";
+	private static final String regResultMessage = "Successful registration!";
+
 	private static final Logger log = LogManager.getLogger(UserService.class);
 
 	@RequestMapping("/showForm")
-	public String showForm(@ModelAttribute("newUserInfo") UserInfo newUserInfo, Model model) {
-		model.addAttribute("reg", "reg");
+	public String showForm(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, Model model) {
+		model.addAttribute(registrationAttribute, regStatus);
 		return "baseLayout";
 	}
 
 	@RequestMapping("/do_registration")
-	public String doRegistration(@ModelAttribute("newUserInfo") UserInfo newUserInfo, RedirectAttributes attr) {
+	public String doRegistration(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, RedirectAttributes attr) {
 
 		String hashPassword = BCrypt.hashpw(newUserInfo.getPassword(), BCrypt.gensalt());
 		newUserInfo.setPassword(hashPassword);
@@ -50,10 +57,10 @@ public class RegistrationController {
 			newUserInfo.setUserRole(defaultUserRole);
 			boolean result = service.registration(newUserInfo);
 			if (result) {
-				attr.addAttribute("regMessage", "Successful registration!");
+				attr.addAttribute(regResultMessageAttribute, regResultMessage);
 				return "redirect:/base_page";
 			} else {
-				attr.addAttribute("messageLoginExist", newUserInfo.getLogin());
+				attr.addAttribute(messageLoginExistAttribute, newUserInfo.getLogin());
 				return "redirect:/registration/showForm";
 
 			}

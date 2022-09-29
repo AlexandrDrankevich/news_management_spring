@@ -5,7 +5,8 @@
 <div class="body-title">
     <a href=""><spring:message code="local.loclink.name.news"/> >> </a><spring:message code="local.loclink.name.news_list"/>
 </div>
-<form action="deleteNews" method="post">
+<c:url var="deleteNews" value="/news/delete"/> 
+<form action="${deleteNews}" method="post">
     <c:forEach var="news" items="${requestScope.news}">
         <div class="single-news-wrapper">
             <div class="single-news-header-wrapper">

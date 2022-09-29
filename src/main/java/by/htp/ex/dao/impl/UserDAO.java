@@ -2,21 +2,13 @@ package by.htp.ex.dao.impl;
 
 import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
-
 import by.htp.ex.entity.UserInfo;
-import by.htp.ex.util.date.DateUtil;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Repository
 public class UserDAO implements IUserDAO {
@@ -67,11 +59,10 @@ public class UserDAO implements IUserDAO {
 		return null;
 	}
 
-	private boolean isloginExist(Session currentSession, String login) {
+	private boolean isloginExist(Session currentSession, String login){
 		Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
 				UserInfo.class);
 		query.setParameter("login", login);
 		return query.uniqueResult() != null;
-
 	}
 }

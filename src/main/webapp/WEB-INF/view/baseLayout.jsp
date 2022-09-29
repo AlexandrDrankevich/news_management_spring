@@ -33,7 +33,7 @@
         </div>
 
         <div class="content">
-            <c:if test="${not (reg eq 'reg')}">
+            <c:if test="${not (reg eq 'active')}">
                 <c:if test="${not (sessionScope.user eq 'active')}">
                     <c:import url="/WEB-INF/view/guestInfo.jsp"/>
                 </c:if>
@@ -41,7 +41,7 @@
                     <c:import url="/WEB-INF/view/body.jsp"/>
                 </c:if>
             </c:if>
-            <c:if test="${reg eq 'reg'}">
+            <c:if test="${reg eq 'active'}">
                 <c:import url="/WEB-INF/view/registration.jsp"/>
             </c:if>
             <c:if test="${addnews eq 'active'}">

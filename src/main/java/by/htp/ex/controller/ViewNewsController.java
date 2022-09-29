@@ -3,7 +3,6 @@ package by.htp.ex.controller;
 import by.htp.ex.controller.constant.AttributeName;
 
 import by.htp.ex.controller.constant.PageName;
-import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.entity.News;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
@@ -17,18 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class GoToViewNews {
+public class ViewNewsController {
 	@Autowired
 	private NewsService newsService;
-	private static final Logger log = LogManager.getLogger(GoToViewNews.class);
+	private static final Logger log = LogManager.getLogger(ViewNewsController.class);
 
 	@RequestMapping("/viewNews/{id}")
-	public String viewNews(@PathVariable("id") String id,HttpServletRequest request) {
+	public String viewNews(@PathVariable("id") String id, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-		
+
 		String typeOfPresentation = "viewNews";
 		try {
 			News news = newsService.findById(Integer.parseInt(id));

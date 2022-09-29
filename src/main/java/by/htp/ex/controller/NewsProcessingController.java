@@ -24,93 +24,96 @@ import by.htp.ex.service.ServiceException;
 @Controller
 @RequestMapping("/news")
 public class NewsProcessingController {
-	
+
 	@Autowired
 	private NewsService newsService;
+	private static final String newsAttribute = "news";
+	private static final String userRoleName = "admin";
+	private static final String userRoleAttribute = "role";
+	private static final String addNewsAttribute = "addnews";
+	private static final String addNewsStatus = "active";
+	private static final String editNewsStatus = "active";
+	private static final String editViewAttribute = "editView";
+	private static final String newsIdParam = "id";
+	private static final String deleteMessageAttribute = "deleteMessage";
+	private static final String deleteMessage="delete ok";
+	private static final String newsMessageAttribute = "newsMessage";
+	private static final String newsMessage = "News saved!";
+
 	private static final Logger log = LogManager.getLogger();
-	
+
 	@RequestMapping("/addNewsForm")
-	public String showAddNewsForm(@ModelAttribute("news") News news, HttpServletRequest request) {
+	public String showAddNewsForm(@ModelAttribute(newsAttribute) News news, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		String userRoleName = "admin";
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-		if (!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
 			return "redirect:/base_page";
 		}
-
-		String addNewsStatus = "active";
-		session.setAttribute(AttributeName.URL, PageName.ADD_NEWS_PAGE);
-		request.setAttribute(AttributeName.ADD_NEWS, addNewsStatus);
+		request.setAttribute(addNewsAttribute, addNewsStatus);
 		return "baseLayout";
 	}
-	
+
 	@RequestMapping("/saveNews")
-	public String addNews(HttpServletRequest request, @ModelAttribute("news") News news, @SessionAttribute("idUser") int idUser,
-			RedirectAttributes attr) {
+	public String addNews(HttpServletRequest request, @ModelAttribute(newsAttribute) News news,
+			@SessionAttribute("idUser") int idUser, RedirectAttributes attr) {
 		HttpSession session = request.getSession(false);
-		String userRoleName = "admin";
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-		if (!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
 			return "redirect:/base_page";
 		}
-			try {
+		try {
 			news.setReporterId(idUser);
 			newsService.save(news);
-			attr.addAttribute("newsMessage", "News saved!");
-			return "redirect:/viewNews/"+news.getIdNews();
-				} catch (ServiceException e) {
+			attr.addAttribute(newsMessageAttribute, newsMessage);
+			return "redirect:/viewNews/" + news.getIdNews();
+		} catch (ServiceException e) {
 			log.error(e);
 			return "error";
 		}
 	}
-	
-	
+
 	@RequestMapping("/editNews/{id}")
-	public String showEditNewsForm(@PathVariable("id") String id, HttpServletRequest request, Model model) {
+	public String showEditNewsForm(@PathVariable(newsIdParam) String id, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
-		String userRoleName = "admin";
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-		if (!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
 			return "redirect:/base_page";
 		}
 
 		try {
-		    News news = newsService.findById(Integer.parseInt(id));
-			model.addAttribute("news", news);
-			String editNewsStatus = "active";
-			request.setAttribute(AttributeName.ADD_NEWS, editNewsStatus);
-			model.addAttribute("editView", editNewsStatus);
-            //session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
+			News news = newsService.findById(Integer.parseInt(id));
+			model.addAttribute(newsAttribute, news);
+			request.setAttribute(addNewsAttribute, editNewsStatus);
+			model.addAttribute(editViewAttribute, editNewsStatus);
 			return "baseLayout";
 		} catch (ServiceException e) {
 			log.error(e);
 			return "error";
 		}
 	}
-	
+
 	@RequestMapping("/delete")
 	public String deleteNews(HttpServletRequest request, RedirectAttributes attr) {
 		HttpSession session = request.getSession(false);
-		String userRoleName = "admin";
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-		if (!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
 			return "redirect:/base_page";
 		}
-		String[] idNews = request.getParameterValues(RequestParameterName.ID);
+		String[] idNews = request.getParameterValues(newsIdParam);
 		try {
 			if (idNews == null) {
 				return "redirect:/newsList";
 			}
 			newsService.delete(idNews);
-			attr.addAttribute("deleteMessage", "delete ok");
+			attr.addAttribute(deleteMessageAttribute, deleteMessage);
 			return "redirect:/newsList";
 		} catch (ServiceException e) {
 			log.error(e);

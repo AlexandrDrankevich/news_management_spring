@@ -4,8 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="body-title">
-<c:url var="basePageLink" value="/base_page">
-<c:param name="regUrl" value="delete"></c:param></c:url>
+<c:url var="basePageLink" value="/base_page"></c:url>
     <a href="${ basePageLink}"><spring:message code="local.loclink.name.news"/> >> </a> 
     <spring:message code="local.loclink.name.reg"/>
 </div>

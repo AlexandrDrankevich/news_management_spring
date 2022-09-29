@@ -24,8 +24,8 @@ private  INewsDAO newsDAO;
 	public List<News> latestList(int count) throws ServiceException {
 		try {
 			List<News> latestNews = newsDAO.getLatestsList(count);
-			if (latestNews.isEmpty()) {
-				latestNews = null;
+			if( latestNews.isEmpty()) {
+				return null;
 			}
 			return latestNews;
 		} catch (NewsDAOException e) {

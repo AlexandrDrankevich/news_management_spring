@@ -4,12 +4,7 @@ import by.htp.ex.dao.INewsDAO;
 import by.htp.ex.dao.NewsDAOException;
 
 import by.htp.ex.entity.News;
-import by.htp.ex.util.date.DateUtil;
-
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -24,19 +19,26 @@ public class NewsDAO implements INewsDAO {
 
 	@Override
 	public List<News> getLatestsList(int count) throws NewsDAOException {
-		Session currentSession = sessionFactory.getCurrentSession();
-		Query<News> theQuery = currentSession.createQuery("from News order by date desc", News.class);
-		theQuery.setMaxResults(count);
-		List<News> news = theQuery.getResultList();
-		return news;
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			Query<News> theQuery = currentSession.createQuery("from News order by date desc", News.class);
+			theQuery.setMaxResults(count);
+			return theQuery.getResultList();
+		} catch (Exception e) {
+			throw new NewsDAOException(e);
+		}
 	}
 
 	@Override
 	public List<News> getList() throws NewsDAOException {
-		Session currentSession = sessionFactory.getCurrentSession();
-		Query<News> theQuery = currentSession.createQuery("from News order by date desc", News.class);
-		List<News> result = theQuery.getResultList();
-		return result;
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			Query<News> theQuery = currentSession.createQuery("from News order by date desc", News.class);
+			List<News> result = theQuery.getResultList();
+			return result;
+		} catch (Exception e) {
+			throw new NewsDAOException(e);
+		}
 	}
 
 	@Override
@@ -51,20 +53,25 @@ public class NewsDAO implements INewsDAO {
 
 	@Override
 	public void saveUpdateNews(News news) throws NewsDAOException {
-		Session currentSession = sessionFactory.getCurrentSession();
-		currentSession.saveOrUpdate(news);
-
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			currentSession.saveOrUpdate(news);
+		} catch (Exception e) {
+			throw new NewsDAOException(e);
+		}
 	}
 
 	@Override
 	public void deleteNews(String[] idNews) throws NewsDAOException {
-		Session currentSession = sessionFactory.getCurrentSession();
-		for (String id : idNews) {
-			Query theQuery = currentSession.createQuery("delete from News where idNews=:id");
-			theQuery.setParameter("id", Integer.parseInt(id));
-			theQuery.executeUpdate();
+		try {
+			Session currentSession = sessionFactory.getCurrentSession();
+			for (String id : idNews) {
+				Query theQuery = currentSession.createQuery("delete from News where idNews=:id");
+				theQuery.setParameter("id", Integer.parseInt(id));
+				theQuery.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw new NewsDAOException(e);
 		}
 	}
-
-
 }

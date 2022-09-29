@@ -33,7 +33,7 @@ public class News implements Serializable {
 
 	public News() {
 	}
-	
+
 	public int getReporterId() {
 		return reporterId;
 	}
@@ -45,12 +45,10 @@ public class News implements Serializable {
 	public Integer getIdNews() {
 		return idNews;
 	}
-	
+
 	public void setIdNews(int idNews) {
 		this.idNews = idNews;
 	}
-
-	
 
 	public String getTitle() {
 		return title;
@@ -76,7 +74,6 @@ public class News implements Serializable {
 		this.content = content;
 	}
 
-
 	public java.sql.Date getNewsDate() {
 		return newsDate;
 	}
@@ -86,24 +83,27 @@ public class News implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		News news = (News) o;
-		return idNews == news.idNews && Objects.equals(title, news.title) && Objects.equals(briefNews, news.briefNews)
-				&& Objects.equals(content, news.content) && Objects.equals(newsDate, news.newsDate);
+	public int hashCode() {
+		return Objects.hash(briefNews, content, idNews, newsDate, reporterId, title);
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(idNews, title, briefNews, content, newsDate);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		News other = (News) obj;
+		return Objects.equals(briefNews, other.briefNews) && Objects.equals(content, other.content)
+				&& idNews == other.idNews && Objects.equals(newsDate, other.newsDate) && reporterId == other.reporterId
+				&& Objects.equals(title, other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "News{" + "idNews=" + idNews + ", title='" + title + '\'' + ", briefNews='" + briefNews + '\''
-				+ ", content='" + content + '\'' + ", newsDate='" + newsDate + '\'' + '}';
+		return "News [idNews=" + idNews + ", title=" + title + ", briefNews=" + briefNews + ", content=" + content
+				+ ", newsDate=" + newsDate + ", reporterId=" + reporterId + "]";
 	}
 }

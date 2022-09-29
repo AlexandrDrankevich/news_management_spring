@@ -55,7 +55,7 @@
             </div>
 
     <div class="second-view-button">
-    <c:url var="deleteLink" value="news/deleteNews">
+    <c:url var="deleteLink" value="/news/delete">
      <c:param name="id" value="${requestScope.news.idNews }" /></c:url>
         <a href="${deleteLink}"><input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/></a>
         

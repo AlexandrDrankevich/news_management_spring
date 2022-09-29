@@ -26,7 +26,6 @@ public class UserInfo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-
 	@Column(name = "name")
 	private String name;
 	@Column(name = "surname")
@@ -37,12 +36,10 @@ public class UserInfo implements Serializable {
 	private String password;
 	@Column(name = "birthday")
 	private java.sql.Date birthday;
-	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-			 CascadeType.DETACH, CascadeType.REFRESH})
-@JoinColumn(name="roles_id")
-private UserRole userRole;
 
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "roles_id")
+	private UserRole userRole;
 
 	public UserRole getUserRole() {
 		return userRole;
@@ -94,7 +91,7 @@ private UserRole userRole;
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -121,7 +118,6 @@ private UserRole userRole;
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(surname, other.surname);
 	}
-	
 
 	@Override
 	public String toString() {
@@ -129,6 +125,4 @@ private UserRole userRole;
 				+ password + ", birthday=" + birthday + "]";
 	}
 
-
-	
 }

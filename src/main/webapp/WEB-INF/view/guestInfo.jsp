@@ -22,10 +22,10 @@
     </div>
 </c:forEach>
 
-<div class="no-news">
-    <c:if test="${requestScope.news eq null}">
-        <spring:message code="local.loctitle.name.no_news"/>
-    </c:if>
-</div>
+ <div class="no-news">
+        <c:if test="${requestScope.news eq null}">
+            <spring:message code="local.loctitle.name.no_news"/>
+        </c:if>
+    </div>
 
 
