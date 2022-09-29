@@ -77,7 +77,7 @@ public class NewsProcessingController {
 	}
 
 	@RequestMapping("/editNews/{id}")
-	public String showEditNewsForm(@PathVariable(newsIdParam) String id, HttpServletRequest request, Model model) {
+	public String showEditNewsForm(@PathVariable("id") String id, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			return "redirect:/base_page";

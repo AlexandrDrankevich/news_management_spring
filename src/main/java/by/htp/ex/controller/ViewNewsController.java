@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewNewsController {
 	@Autowired
 	private NewsService newsService;
+	private static final String newsAttribute = "news";
+	private static final String typeOfPresentation = "viewNews";
+	private static final String presentationTypeAttribute = "presentation";
 	private static final Logger log = LogManager.getLogger(ViewNewsController.class);
 
 	@RequestMapping("/viewNews/{id}")
@@ -27,13 +30,10 @@ public class ViewNewsController {
 		if (session == null) {
 			return "redirect:/base_page";
 		}
-
-		String typeOfPresentation = "viewNews";
 		try {
 			News news = newsService.findById(Integer.parseInt(id));
-			request.setAttribute(AttributeName.NEWS, news);
-			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
-			session.setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
+			request.setAttribute(newsAttribute, news);
+			request.setAttribute(presentationTypeAttribute, typeOfPresentation);
 			return "baseLayout";
 		} catch (ServiceException e) {
 			log.error(e);
