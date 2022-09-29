@@ -1,10 +1,9 @@
 package by.htp.ex.controller;
 
+import java.io.IOException;
 
-import by.htp.ex.entity.UserInfo;
-import by.htp.ex.service.ServiceException;
-import by.htp.ex.service.UserService;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,18 +12,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
+import by.htp.ex.entity.UserInfo;
+import by.htp.ex.service.ServiceException;
+import by.htp.ex.service.UserService;
+
 
 @Controller
 @SessionAttributes({"user", "role","idUser"})
-public class DoSIgnIn {
+public class AuthorizationController {
 	@Autowired
 	private UserService service;
-	private static final Logger log = LogManager.getLogger(DoSIgnIn.class);
+	private static final Logger log = LogManager.getLogger();
+	
 
 	@RequestMapping("/signIn")
 	public String signIn(@RequestParam("login") String login, @RequestParam("password") String password,
@@ -43,7 +46,6 @@ public class DoSIgnIn {
 				
 			} else {
 				model.addAttribute("user", userStatusNotActive);
-				// session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
 				attr.addAttribute("AuthenticationError", "wrong login or password");
 				return "redirect:/base_page";
 			}
@@ -51,5 +53,14 @@ public class DoSIgnIn {
 			log.error(e);
 			return "redirect:/base_page";
 		}
+	}
+	
+	@RequestMapping("/signOut")
+	public String signOut(HttpSession session,  Model model, SessionStatus status ) {
+	//	String userStatusNotActive = "not active";
+		//model.addAttribute("user", userStatusNotActive);
+		 status.setComplete();
+		session.invalidate();
+		return "redirect:/base_page";
 	}
 }

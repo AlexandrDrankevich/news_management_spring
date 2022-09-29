@@ -22,24 +22,16 @@ public class GoToBasePage {
 
 	@RequestMapping("/base_page")
 	public String goToBasePage(HttpServletRequest request, Model model) {
-
 		List<News> latestNews;
 		int countNews = 5;
 		try {
 			latestNews = newsService.latestList(countNews);
-			// checkParameter(request);
 			model.addAttribute(AttributeName.NEWS, latestNews);
 			return "baseLayout";
-
 		} catch (ServiceException e) {
 			log.error(e);
 			return "error";
 		}
 	}
 
-	private void checkParameter(HttpServletRequest request) {
-		if (request.getParameter(RequestParameterName.REGISTRATION_PAGE_URL) != null) {
-			request.getSession().removeAttribute(AttributeName.URL);
-		}
-	}
 }

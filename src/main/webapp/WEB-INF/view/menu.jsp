@@ -18,7 +18,7 @@
                 </li>
                 <c:if test="${sessionScope.role eq 'admin'}">
                     <li>
-                    <c:url var="addNews" value="/addNewsForm"/>
+                    <c:url var="addNews" value="/news/addNewsForm"/>
                         <a href="${addNews}"><spring:message code="local.loclink.name.add"/></a>
                         <br/>
                     </li>

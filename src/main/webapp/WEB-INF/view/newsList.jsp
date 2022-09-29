@@ -22,7 +22,7 @@
                 <div class="news-link-to-wrapper">
                     <div class="link-position">
                         <c:if test="${sessionScope.role eq 'admin'}">
-                            <a href="editNews/${news.idNews}"><spring:message code="local.loclink.name.edit"/>&nbsp </a>
+                            <a href="news/editNews/${news.idNews}"><spring:message code="local.loclink.name.edit"/>&nbsp </a>
                         </c:if>
                        
                         <a href="viewNews/${news.idNews}"><spring:message code="local.loclink.name.view"/></a>

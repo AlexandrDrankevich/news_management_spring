@@ -1,15 +1,13 @@
 package by.htp.ex.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class DoSignOut {
-	@RequestMapping("signOut")
-	public String signOut(HttpSession session ) {
-		session.invalidate();
+public class IndexPageController {
+	@RequestMapping("/")
+	public String showForm(Model theModel) {
 		return "redirect:/base_page";
 	}
 }

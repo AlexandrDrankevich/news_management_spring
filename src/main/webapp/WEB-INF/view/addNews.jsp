@@ -12,7 +12,7 @@
 </div>
 <br/>
 <div align="center">
- <c:url var="addNews" value="/addNews"/> 
+ <c:url var="addNews" value="/news/saveNews"/> 
     <form:form  action="${addNews}" modelAttribute="news">
    <form:hidden path="idNews" />
         <div>

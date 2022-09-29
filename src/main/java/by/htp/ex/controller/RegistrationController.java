@@ -27,7 +27,7 @@ import by.htp.ex.service.UserService;
 
 @Controller
 @RequestMapping("/registration")
-public class RegistrationCommand {
+public class RegistrationController {
 
 	@Autowired
 	private UserService service;

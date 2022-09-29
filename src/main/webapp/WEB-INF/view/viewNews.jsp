@@ -50,12 +50,12 @@
 
 <c:if test="${sessionScope.role eq 'admin'}">
     <div class="first-view-button">
-     <c:url var="editLink" value="/editNews/${requestScope.news.idNews }"> </c:url>
+     <c:url var="editLink" value="/news/editNews/${requestScope.news.idNews }"> </c:url>
         <a href="${editLink}"><input type="submit" value="<spring:message code="local.locbutton.name.edit"/>"/></a>
             </div>
 
     <div class="second-view-button">
-    <c:url var="deleteLink" value="/deleteNews">
+    <c:url var="deleteLink" value="news/deleteNews">
      <c:param name="id" value="${requestScope.news.idNews }" /></c:url>
         <a href="${deleteLink}"><input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/></a>
         
