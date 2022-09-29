@@ -6,16 +6,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<fmt:setLocale value="${sessionScope.local}"/>
-<fmt:setBundle basename="localization.local" var="loc"/>
-<fmt:message bundle="${loc}" key="local.loctitle.name.welcome"
-             var="welcome"/>
-<fmt:message bundle="${loc}" key="local.loctitle.name.management"
-             var="management"/>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>${management}</title>
+    <title><spring:message code="local.loctitle.name.management"/></title>
   <spring:url value="/resources/styles/newsStyle.css" var="newsStyleCss"/>
 <link href="${newsStyleCss}" rel="stylesheet" />
 </head>
@@ -30,7 +24,7 @@
         <div class="menu">
 
             <c:if test="${not (sessionScope.user eq 'active')}">
-                ${welcome}
+               <spring:message code="local.loctitle.name.welcome"/>
                 <br/>
             </c:if>
             <c:if test="${sessionScope.user eq 'active'}">

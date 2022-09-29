@@ -1,67 +1,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<fmt:setLocale value="${sessionScope.local}"/>
-<fmt:setBundle basename="localization.local" var="loc"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.reg"
-             var="registration"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.name"
-             var="name"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.surname"
-             var="surname"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.logMail"
-             var="login"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.birthday"
-             var="birthday"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.password"
-             var="password"/>
-<fmt:message bundle="${loc}" key="local.loclabel.name.exist"
-             var="exist"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.news"
-             var="news_link"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="body-title">
 <c:url var="basePageLink" value="/base_page">
 <c:param name="regUrl" value="delete"></c:param></c:url>
-    <a href="${ basePageLink}">${news_link} >> </a> ${registration}
+    <a href="${ basePageLink}"><spring:message code="local.loclink.name.news"/> >> </a> 
+    <spring:message code="local.loclink.name.reg"/>
 </div>
 
 <div class="reg-form-body">
     <form:form action="do_registration" modelAttribute="newUserInfo">
      <form:hidden path="id" />
         <div>
-            <label for="name">${name} </label>
+            <label for="name"><spring:message code="local.loclabel.name.name"/> </label>
             <form:input  path="name"  class="form-control" required="required" pattern="[A-Z a-z]+"/>
         </div>
         <br/>
         <div>
-            <label for="surname">${surname}</label>
+            <label for="surname"><spring:message code="local.loclabel.name.surname"/></label>
             <form:input  path="surname" class="form-control" required="required" pattern="[A-Z a-z]+"/>
         </div>
         <br/>
         <div>
-            <label for="login">${login}
+            <label for="login"><spring:message code="local.loclabel.name.logMail"/>
                 <c:if test="${not(param.messageLoginExist eq null)}">
-                    <font color="red"> <c:out value="${param.messageLoginExist} ${exist}"/></font>
+                    <font color="red"> <c:out value="${param.messageLoginExist}"/> 
+<spring:message code="local.loclabel.name.exist"/></font>
                 </c:if>
             </label>
            <form:input type="email" path="login" class="form-control" required="required"/>
         </div>
         <br/>
         <div>
-            <label for="birthday">${birthday}</label>
+            <label for="birthday"><spring:message code="local.loclabel.name.birthday"/></label>
              <form:input  type="date" path="birthday" class="form-control" required="required"/>
         </div>
         <br/>
         <div>
-            <label for="password">${password} </label>
+            <label for="password"><spring:message code="local.loclabel.name.password"/> </label>
           <form:input type="password"  id="password" path="password" class="form-control" required="required" 
           pattern="[A-Z a-z 0-9]+"/>
         </div>
         <br/>
         <div>
-            <input type="submit" class="btn" value="${registration}"/>
+            <input type="submit" class="btn" value="<spring:message code="local.loclink.name.reg"/>"/>
         </div>
   </form:form>
 </div>

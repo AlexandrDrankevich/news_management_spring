@@ -1,25 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<fmt:setLocale value="${sessionScope.local}"/>
-<fmt:setBundle basename="localization.local" var="loc"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.news"
-             var="news"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.news_list"
-             var="news_list"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.edit"
-             var="edit"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.view"
-             var="view"/>
-<fmt:message bundle="${loc}" key="local.locbutton.name.delete"
-             var="delete"/>
-<fmt:message bundle="${loc}" key="local.loctitle.name.no_news"
-             var="no_news"/>
-<fmt:message bundle="${loc}" key="local.loctitle.news_on_page"
-             var="news_on_page"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="body-title">
-    <a href="">${news} >> </a>${news_list}
+    <a href=""><spring:message code="local.loclink.name.news"/> >> </a><spring:message code="local.loclink.name.news_list"/>
 </div>
 <form action="deleteNews" method="post">
     <c:forEach var="news" items="${requestScope.news}">
@@ -38,10 +22,10 @@
                 <div class="news-link-to-wrapper">
                     <div class="link-position">
                         <c:if test="${sessionScope.role eq 'admin'}">
-                            <a href="editNews/${news.idNews}">${edit}&nbsp </a>
+                            <a href="editNews/${news.idNews}"><spring:message code="local.loclink.name.edit"/>&nbsp </a>
                         </c:if>
                        
-                        <a href="viewNews/${news.idNews}">${view} </a>
+                        <a href="viewNews/${news.idNews}"><spring:message code="local.loclink.name.view"/></a>
                         <c:if test="${sessionScope.role eq 'admin'}">
                             <input type="checkbox" name="id" value="${news.idNews }" />
                         </c:if>
@@ -54,13 +38,13 @@
 
     <div class="no-news">
         <c:if test="${requestScope.news eq null}">
-            ${no_news}
+            <spring:message code="local.loctitle.name.no_news"/>
         </c:if>
     </div>
     <c:if test="${(sessionScope.role eq 'admin')&&not(requestScope.news eq null)}">
         <div align="right">
             
-            <input type="submit" value="${delete}"/>
+            <input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/>
         </div>
     </c:if>
     <br/><div align="center">
@@ -75,7 +59,7 @@
              </c:if>
                </div>
       <c:if test="${requestScope.news.size()>4}">
-		<br /> ${news_on_page}
+		<br /> <spring:message code="local.loctitle.news_on_page"/>
 		 <c:url var="newsNumberLink5" value="/newsList"> 
      <c:param name="pageNumber" value="1" />
      <c:param name="newsCount" value="5" />

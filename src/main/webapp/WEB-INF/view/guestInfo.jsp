@@ -1,16 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<fmt:setLocale value="${sessionScope.local}"/>
-<fmt:setBundle basename="localization.local" var="loc"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.news"
-             var="news"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.latest_news"
-             var="latest_news"/>
-<fmt:message bundle="${loc}" key="local.loctitle.name.no_news"
-             var="no_news"/>
 <div class="body-title">
-    <a href="">${news} >> </a>${latest_news}
+    <a href=""><spring:message code="local.loclink.name.news"/> >> </a><spring:message code="local.loclink.name.latest_news"/>
 </div>
 
 <c:forEach var="news" items="${requestScope.news}">
@@ -31,7 +24,7 @@
 
 <div class="no-news">
     <c:if test="${requestScope.news eq null}">
-        ${no_news}
+        <spring:message code="local.loctitle.name.no_news"/>
     </c:if>
 </div>
 

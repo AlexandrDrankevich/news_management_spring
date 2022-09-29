@@ -1,19 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<fmt:setLocale value="${sessionScope.local}"/>
-<fmt:setBundle basename="localization.local" var="loc"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.list"
-             var="list"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.add"
-             var="add"/>
-<fmt:message bundle="${loc}" key="local.loclink.name.news"
-             var="news"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="menu-wrapper">
     <div class="menu-title-wrapper">
         <div class="menu-title">
-            ${news}
+           <spring:message code="local.loclink.name.news"/>
         </div>
     </div>
 
@@ -22,12 +14,12 @@
             <ul>
                 <li >
                 <c:url var="newsLink" value="/newsList"/> 
-                    <a href="${newsLink}">${list}</a><br/>
+                    <a href="${newsLink}"> <spring:message code="local.loclink.name.list"/></a><br/>
                 </li>
                 <c:if test="${sessionScope.role eq 'admin'}">
                     <li>
                     <c:url var="addNews" value="/addNewsForm"/>
-                        <a href="${addNews}">${add} </a>
+                        <a href="${addNews}"><spring:message code="local.loclink.name.add"/></a>
                         <br/>
                     </li>
                 </c:if>
