@@ -20,10 +20,6 @@ public class ViewNewsController {
 
 	@RequestMapping("/viewNews/{id}")
 	public String viewNews(@PathVariable("id") String id, HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return "redirect:/base_page";
-		}
 		try {
 			News news = newsService.findById(Integer.parseInt(id));
 			request.setAttribute(newsAttribute, news);

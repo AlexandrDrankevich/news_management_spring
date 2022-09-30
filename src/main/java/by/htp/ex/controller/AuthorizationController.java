@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +25,6 @@ public class AuthorizationController {
 	private static final String userRoleAttribute="role";
 	private static final String authenticationErrorMessageAttribute="AuthenticationError";
 	private static final String authenticationErrorMessage="wrong login or password";
-	private static final Logger log = LogManager.getLogger();
 
 	@RequestMapping("/signIn")
 	public String signIn(@RequestParam("login") String login, @RequestParam("password") String password,
@@ -47,7 +43,6 @@ public class AuthorizationController {
 				return "redirect:/base_page";
 			}
 		} catch (ServiceException e) {
-			log.error(e);
 			return "redirect:/base_page";
 		}
 	}

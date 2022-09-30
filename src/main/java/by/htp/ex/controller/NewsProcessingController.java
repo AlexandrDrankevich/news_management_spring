@@ -29,19 +29,12 @@ public class NewsProcessingController {
 	private static final String editViewAttribute = "editView";
 	private static final String newsIdParam = "id";
 	private static final String deleteMessageAttribute = "deleteMessage";
-	private static final String deleteMessage="delete ok";
+	private static final String deleteMessage = "delete ok";
 	private static final String newsMessageAttribute = "newsMessage";
 	private static final String newsMessage = "News saved!";
 
 	@RequestMapping("/addNewsForm")
 	public String showAddNewsForm(@ModelAttribute(newsAttribute) News news, HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return "redirect:/base_page";
-		}
-		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
-			return "redirect:/base_page";
-		}
 		request.setAttribute(addNewsAttribute, addNewsStatus);
 		return "baseLayout";
 	}
@@ -49,13 +42,6 @@ public class NewsProcessingController {
 	@RequestMapping("/saveNews")
 	public String addNews(HttpServletRequest request, @ModelAttribute(newsAttribute) News news,
 			@SessionAttribute("idUser") int idUser, RedirectAttributes attr) {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return "redirect:/base_page";
-		}
-		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
-			return "redirect:/base_page";
-		}
 		try {
 			news.setReporterId(idUser);
 			newsService.save(news);
@@ -68,14 +54,6 @@ public class NewsProcessingController {
 
 	@RequestMapping("/editNews/{id}")
 	public String showEditNewsForm(@PathVariable("id") String id, HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return "redirect:/base_page";
-		}
-		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
-			return "redirect:/base_page";
-		}
-
 		try {
 			News news = newsService.findById(Integer.parseInt(id));
 			model.addAttribute(newsAttribute, news);
@@ -89,13 +67,6 @@ public class NewsProcessingController {
 
 	@RequestMapping("/delete")
 	public String deleteNews(HttpServletRequest request, RedirectAttributes attr) {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return "redirect:/base_page";
-		}
-		if (!userRoleName.equals(session.getAttribute(userRoleAttribute))) {
-			return "redirect:/base_page";
-		}
 		String[] idNews = request.getParameterValues(newsIdParam);
 		try {
 			if (idNews == null) {
