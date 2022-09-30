@@ -1,10 +1,10 @@
 package by.htp.ex.util.validation;
 
+import by.htp.ex.entity.UserInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import by.htp.ex.entity.UserInfo;
 
 public class DataValidation {
 
@@ -30,6 +30,7 @@ public class DataValidation {
         private static final String passwordCheckPattern = "[A-Z a-z 0-9]+";
         private static final String nameSurnameCheckPattern = "[A-Z a-z]+";
         private static final String birthdayCheckPattern = "((19|20)\\d\\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])";
+
         public Builder checkLogin(String login) {
             validResults.put("login", Pattern.matches(loginCheckPattern, login));
             return (this);

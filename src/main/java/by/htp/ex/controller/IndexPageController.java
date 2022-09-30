@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexPageController {
-	@RequestMapping("/")
-	public String showForm(Model theModel) {
-		return "redirect:/base_page";
-	}
+    @RequestMapping("/")
+    public String showForm(Model theModel) {
+        return "redirect:/base_page";
+    }
 }

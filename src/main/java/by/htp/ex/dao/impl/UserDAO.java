@@ -12,57 +12,56 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDAO implements IUserDAO {
-	@Autowired
-	private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
+    private static final int saltLength = 30;
 
-	private static final int saltLength = 30;
-
-	@Override
-	public UserInfo logination(String login, String password) throws DaoException {
-		try {
-			Session currentSession = sessionFactory.getCurrentSession();
-			Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
-					UserInfo.class);
-			query.setParameter("login", login);
-			UserInfo user=query.uniqueResult();
-			if (user != null) {
-			return user=checkUserByPassword(user, password);
-			}
-		} catch (Exception e) {
-			throw new DaoException(e);
-		}
-		return null;
-	}
+    @Override
+    public UserInfo logination(String login, String password) throws DaoException {
+        try {
+            Session currentSession = sessionFactory.getCurrentSession();
+            Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
+                    UserInfo.class);
+            query.setParameter("login", login);
+            UserInfo user = query.uniqueResult();
+            if (user != null) {
+                return user = checkUserByPassword(user, password);
+            }
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        return null;
+    }
 
 
-	@Override
-	public boolean registration(UserInfo user) throws DaoException {
-		Session currentSession = sessionFactory.getCurrentSession();
-		try {
-			if (isloginExist(currentSession, user.getLogin())) {
-				return false;
-			}
-			System.out.println(user.getId());
-			currentSession.saveOrUpdate(user);
-		} catch (Exception e) {
-			throw new DaoException(e);
-		}
-		return true;
-	}
+    @Override
+    public boolean registration(UserInfo user) throws DaoException {
+        Session currentSession = sessionFactory.getCurrentSession();
+        try {
+            if (isloginExist(currentSession, user.getLogin())) {
+                return false;
+            }
+            System.out.println(user.getId());
+            currentSession.saveOrUpdate(user);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        return true;
+    }
 
-	private UserInfo checkUserByPassword(UserInfo user, String password) {
-		String hashPasswordDataBase=user.getPassword();
-		String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
-		if( hashPasswordDataBase.equals(hashPassword)) {
-			return user;
-		}
-		return null;
-	}
+    private UserInfo checkUserByPassword(UserInfo user, String password) {
+        String hashPasswordDataBase = user.getPassword();
+        String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
+        if (hashPasswordDataBase.equals(hashPassword)) {
+            return user;
+        }
+        return null;
+    }
 
-	private boolean isloginExist(Session currentSession, String login){
-		Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
-				UserInfo.class);
-		query.setParameter("login", login);
-		return query.uniqueResult() != null;
-	}
+    private boolean isloginExist(Session currentSession, String login) {
+        Query<UserInfo> query = currentSession.createQuery("from UserInfo v where v.login=:login",
+                UserInfo.class);
+        query.setParameter("login", login);
+        return query.uniqueResult() != null;
+    }
 }

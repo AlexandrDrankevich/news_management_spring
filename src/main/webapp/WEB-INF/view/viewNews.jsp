@@ -3,16 +3,16 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="body-title">
-<c:url var="newsLink" value="/newsList"/> 
-                    <a href="${newsLink}"> <spring:message code="local.loclink.name.news"/> >>  </a> 
-                    <spring:message code="local.loclink.name.view_news"/>
-   
+    <c:url var="newsLink" value="/newsList"/>
+    <a href="${newsLink}"> <spring:message code="local.loclink.name.news"/> >> </a>
+    <spring:message code="local.loclink.name.view_news"/>
+
 </div>
 
 <div class="add-table-margin">
     <table class="news_text_format">
         <tr>
-            <td class="space_around_title_text"> <spring:message code="local.loclabel.name.title"/></td>
+            <td class="space_around_title_text"><spring:message code="local.loclabel.name.title"/></td>
 
             <td class="space_around_view_text">
                 <div class="word-breaker">
@@ -50,14 +50,14 @@
 
 <c:if test="${sessionScope.role eq 'admin'}">
     <div class="first-view-button">
-     <c:url var="editLink" value="/news/editNews/${requestScope.news.idNews }"> </c:url>
+        <c:url var="editLink" value="/news/editNews/${requestScope.news.idNews }"> </c:url>
         <a href="${editLink}"><input type="submit" value="<spring:message code="local.locbutton.name.edit"/>"/></a>
-            </div>
+    </div>
 
     <div class="second-view-button">
-    <c:url var="deleteLink" value="/news/delete">
-     <c:param name="id" value="${requestScope.news.idNews }" /></c:url>
+        <c:url var="deleteLink" value="/news/delete">
+            <c:param name="id" value="${requestScope.news.idNews }"/></c:url>
         <a href="${deleteLink}"><input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/></a>
-        
+
     </div>
 </c:if>

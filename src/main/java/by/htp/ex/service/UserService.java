@@ -4,7 +4,7 @@ import by.htp.ex.entity.UserInfo;
 
 public interface UserService {
 
-	UserInfo signIn(String login, String password) throws ServiceException;
+    UserInfo signIn(String login, String password) throws ServiceException;
 
-	boolean registration(UserInfo user) throws ServiceException;
+    boolean registration(UserInfo user) throws ServiceException;
 }

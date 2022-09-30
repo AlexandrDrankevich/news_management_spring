@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
-	private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-	@AfterThrowing(pointcut = "execution(* by.htp.ex.service.impl.*.*(..))", throwing = "theExc")
-	public void afterThrowingsAdvice(Throwable theExc) {
-		log.error(theExc);
-	}
+    @AfterThrowing(pointcut = "execution(* by.htp.ex.service.impl.*.*(..))", throwing = "theExc")
+    public void afterThrowingsAdvice(Throwable theExc) {
+        log.error(theExc);
+    }
 }
