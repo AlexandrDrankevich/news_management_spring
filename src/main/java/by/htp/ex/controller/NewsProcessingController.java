@@ -2,9 +2,6 @@ package by.htp.ex.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.constant.PageName;
-import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.entity.News;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
@@ -39,8 +32,6 @@ public class NewsProcessingController {
 	private static final String deleteMessage="delete ok";
 	private static final String newsMessageAttribute = "newsMessage";
 	private static final String newsMessage = "News saved!";
-
-	private static final Logger log = LogManager.getLogger();
 
 	@RequestMapping("/addNewsForm")
 	public String showAddNewsForm(@ModelAttribute(newsAttribute) News news, HttpServletRequest request) {
@@ -71,7 +62,6 @@ public class NewsProcessingController {
 			attr.addAttribute(newsMessageAttribute, newsMessage);
 			return "redirect:/viewNews/" + news.getIdNews();
 		} catch (ServiceException e) {
-			log.error(e);
 			return "error";
 		}
 	}
@@ -93,7 +83,6 @@ public class NewsProcessingController {
 			model.addAttribute(editViewAttribute, editNewsStatus);
 			return "baseLayout";
 		} catch (ServiceException e) {
-			log.error(e);
 			return "error";
 		}
 	}
@@ -116,7 +105,6 @@ public class NewsProcessingController {
 			attr.addAttribute(deleteMessageAttribute, deleteMessage);
 			return "redirect:/newsList";
 		} catch (ServiceException e) {
-			log.error(e);
 			return "error";
 		}
 	}

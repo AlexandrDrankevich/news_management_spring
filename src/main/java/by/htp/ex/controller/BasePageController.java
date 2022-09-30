@@ -1,12 +1,8 @@
 package by.htp.ex.controller;
 
-import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.entity.News;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +14,7 @@ import java.util.List;
 public class BasePageController {
 	@Autowired
 	private NewsService newsService;
-	private static final String newsOnPageAttribute="news";
-	private static final Logger log = LogManager.getLogger(BasePageController.class);
+	private static final String newsOnPageAttribute = "news";
 
 	@RequestMapping("/base_page")
 	public String goToBasePage(HttpServletRequest request, Model model) {
@@ -30,7 +25,6 @@ public class BasePageController {
 			model.addAttribute(newsOnPageAttribute, latestNews);
 			return "baseLayout";
 		} catch (ServiceException e) {
-			log.error(e);
 			return "error";
 		}
 	}

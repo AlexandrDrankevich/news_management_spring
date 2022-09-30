@@ -1,13 +1,8 @@
 package by.htp.ex.controller;
 
-import by.htp.ex.controller.constant.AttributeName;
-import by.htp.ex.controller.constant.PageName;
-import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.entity.News;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +29,6 @@ public class NewsListController {
 	private static final String sessionNewsCounAttribute = "newsCount";
 	private static final String sessionPageAttribute = "pageNumber";
 
-	private static final Logger log = LogManager.getLogger(NewsListController.class);
-
 	@RequestMapping("/newsList")
 	public String showNewsList(HttpServletRequest request, Model model,
 			@RequestParam(value = newsCountParam, required = false) String newsCount,
@@ -55,8 +48,7 @@ public class NewsListController {
 			model.addAttribute(presentationTypeAttribute, typeOfPresentation);
 			return "baseLayout";
 		} catch (ServiceException e) {
-			log.error(e);
-			return "error";
+				return "error";
 		}
 	}
 
