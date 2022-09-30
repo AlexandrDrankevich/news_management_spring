@@ -32,7 +32,8 @@ public class RegistrationController {
 	}
 
 	@RequestMapping("/do_registration")
-	public String doRegistration(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, RedirectAttributes attr) {
+	public String doRegistration(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, RedirectAttributes attr,
+			Model model) {
 
 		String hashPassword = BCrypt.hashpw(newUserInfo.getPassword(), BCrypt.gensalt());
 		newUserInfo.setPassword(hashPassword);
@@ -45,12 +46,14 @@ public class RegistrationController {
 				attr.addAttribute(regResultMessageAttribute, regResultMessage);
 				return "redirect:/base_page";
 			} else {
-				attr.addAttribute(messageLoginExistAttribute, newUserInfo.getLogin());
-				return "redirect:/registration/showForm";
-
+				newUserInfo.setPassword("");
+				model.addAttribute(userInfoAttribute, newUserInfo);
+				model.addAttribute(messageLoginExistAttribute, newUserInfo.getLogin());
+				model.addAttribute(registrationAttribute, regStatus);
+				return "baseLayout";
 			}
 		} catch (ServiceException e) {
-			return "redirect:/base_page";
+			return "error";
 		}
 	}
 }

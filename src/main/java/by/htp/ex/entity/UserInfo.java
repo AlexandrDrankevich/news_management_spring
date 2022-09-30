@@ -121,8 +121,7 @@ public class UserInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NewUserInfo [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", password="
-				+ password + ", birthday=" + birthday + "]";
+		return "UserInfo [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", password="
+				+ password + ", birthday=" + birthday + ", userRole=" + userRole + "]";
 	}
-
 }

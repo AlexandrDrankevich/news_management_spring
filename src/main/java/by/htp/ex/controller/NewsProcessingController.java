@@ -21,8 +21,6 @@ public class NewsProcessingController {
 	@Autowired
 	private NewsService newsService;
 	private static final String newsAttribute = "news";
-	private static final String userRoleName = "admin";
-	private static final String userRoleAttribute = "role";
 	private static final String addNewsAttribute = "addnews";
 	private static final String addNewsStatus = "active";
 	private static final String editNewsStatus = "active";

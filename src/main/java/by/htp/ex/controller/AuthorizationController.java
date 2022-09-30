@@ -43,7 +43,7 @@ public class AuthorizationController {
 				return "redirect:/base_page";
 			}
 		} catch (ServiceException e) {
-			return "redirect:/base_page";
+			return "error";
 		}
 	}
 

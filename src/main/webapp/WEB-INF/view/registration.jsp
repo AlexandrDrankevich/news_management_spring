@@ -24,8 +24,8 @@
         <br/>
         <div>
             <label for="login"><spring:message code="local.loclabel.name.logMail"/>
-                <c:if test="${not(param.messageLoginExist eq null)}">
-                    <font color="red"> <c:out value="${param.messageLoginExist}"/> 
+                <c:if test="${not(messageLoginExist eq null)}">
+                    <font color="red"> <c:out value="${messageLoginExist}"/> 
 <spring:message code="local.loclabel.name.exist"/></font>
                 </c:if>
             </label>
