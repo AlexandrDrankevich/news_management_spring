@@ -34,8 +34,8 @@ public class RegistrationController {
 	@RequestMapping("/do_registration")
 	public String doRegistration(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, RedirectAttributes attr,
 			Model model) {
-
-		String hashPassword = BCrypt.hashpw(newUserInfo.getPassword(), BCrypt.gensalt());
+		String password=newUserInfo.getPassword();
+		String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 		newUserInfo.setPassword(hashPassword);
 		try {
 			UserRole defaultUserRole = new UserRole();
@@ -46,7 +46,7 @@ public class RegistrationController {
 				attr.addAttribute(regResultMessageAttribute, regResultMessage);
 				return "redirect:/base_page";
 			} else {
-				newUserInfo.setPassword("");
+				newUserInfo.setPassword(password);
 				model.addAttribute(userInfoAttribute, newUserInfo);
 				model.addAttribute(messageLoginExistAttribute, newUserInfo.getLogin());
 				model.addAttribute(registrationAttribute, regStatus);
