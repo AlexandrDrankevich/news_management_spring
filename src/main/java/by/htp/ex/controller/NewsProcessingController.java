@@ -39,9 +39,8 @@ public class NewsProcessingController {
 
     @RequestMapping("/saveNews")
     public String addNews(HttpServletRequest request, @ModelAttribute(newsAttribute) News news,
-                          @SessionAttribute("idUser") int idUser, RedirectAttributes attr) {
+                          RedirectAttributes attr) {
         try {
-            news.setReporterId(idUser);
             newsService.save(news);
             attr.addAttribute(newsMessageAttribute, newsMessage);
             return "redirect:/viewNews/" + news.getIdNews();

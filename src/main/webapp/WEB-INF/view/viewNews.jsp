@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="body-title">
     <c:url var="newsLink" value="/newsList"/>
@@ -48,7 +49,7 @@
     </table>
 </div>
 
-<c:if test="${sessionScope.role eq 'admin'}">
+  <security:authorize access="hasRole('ADMIN')">
     <div class="first-view-button">
         <c:url var="editLink" value="/news/editNews/${requestScope.news.idNews }"> </c:url>
         <a href="${editLink}"><input type="submit" value="<spring:message code="local.locbutton.name.edit"/>"/></a>
@@ -60,4 +61,4 @@
         <a href="${deleteLink}"><input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/></a>
 
     </div>
-</c:if>
+  </security:authorize>	

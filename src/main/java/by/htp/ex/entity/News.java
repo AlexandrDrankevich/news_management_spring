@@ -21,20 +21,11 @@ public class News implements Serializable {
     private String content;
     @Column(name = "date")
     private java.sql.Date newsDate;
-    @Column(name = "reporter_id")
-    private int reporterId;
-
+    
     public News() {
     }
 
-    public int getReporterId() {
-        return reporterId;
-    }
-
-    public void setReporterId(int reporterId) {
-        this.reporterId = reporterId;
-    }
-
+ 
     public Integer getIdNews() {
         return idNews;
     }
@@ -77,7 +68,7 @@ public class News implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(briefNews, content, idNews, newsDate, reporterId, title);
+        return Objects.hash(briefNews, content, idNews, newsDate, title);
     }
 
     @Override
@@ -90,13 +81,13 @@ public class News implements Serializable {
             return false;
         News other = (News) obj;
         return Objects.equals(briefNews, other.briefNews) && Objects.equals(content, other.content)
-                && idNews == other.idNews && Objects.equals(newsDate, other.newsDate) && reporterId == other.reporterId
+                && idNews == other.idNews && Objects.equals(newsDate, other.newsDate)
                 && Objects.equals(title, other.title);
     }
 
     @Override
     public String toString() {
         return "News [idNews=" + idNews + ", title=" + title + ", briefNews=" + briefNews + ", content=" + content
-                + ", newsDate=" + newsDate + ", reporterId=" + reporterId + "]";
+                + ", newsDate=" + newsDate +"]";
     }
 }

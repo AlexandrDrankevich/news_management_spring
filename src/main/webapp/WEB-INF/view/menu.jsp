@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="menu-wrapper">
     <div class="menu-title-wrapper">
@@ -16,13 +17,13 @@
                     <c:url var="newsLink" value="/newsList"/>
                     <a href="${newsLink}"> <spring:message code="local.loclink.name.list"/></a><br/>
                 </li>
-                <c:if test="${sessionScope.role eq 'admin'}">
+                	<security:authorize access="hasRole('ADMIN')">
                     <li>
                         <c:url var="addNews" value="/news/addNewsForm"/>
                         <a href="${addNews}"><spring:message code="local.loclink.name.add"/></a>
                         <br/>
                     </li>
-                </c:if>
+                </security:authorize>	
             </ul>
         </div>
         <div class="clear"></div>

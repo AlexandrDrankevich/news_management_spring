@@ -1,13 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="body-title">
     <a href=""><spring:message code="local.loclink.name.news"/> >> </a><spring:message
         code="local.loclink.name.news_list"/>
 </div>
 <c:url var="deleteNews" value="/news/delete"/>
-<form action="${deleteNews}" method="post">
+<form:form action="${deleteNews}" method="get">
     <c:forEach var="news" items="${requestScope.news}">
         <div class="single-news-wrapper">
             <div class="single-news-header-wrapper">
@@ -23,15 +25,15 @@
                 </div>
                 <div class="news-link-to-wrapper">
                     <div class="link-position">
-                        <c:if test="${sessionScope.role eq 'admin'}">
+                        <security:authorize access="hasRole('ADMIN')">
                             <a href="news/editNews/${news.idNews}"><spring:message
                                     code="local.loclink.name.edit"/>&nbsp </a>
-                        </c:if>
+                       </security:authorize>	
 
                         <a href="viewNews/${news.idNews}"><spring:message code="local.loclink.name.view"/></a>
-                        <c:if test="${sessionScope.role eq 'admin'}">
+                        <security:authorize access="hasRole('ADMIN')">
                             <input type="checkbox" name="id" value="${news.idNews }"/>
-                        </c:if>
+                          </security:authorize>
                     </div>
                 </div>
             </div>
@@ -44,12 +46,15 @@
             <spring:message code="local.loctitle.name.no_news"/>
         </c:if>
     </div>
-    <c:if test="${(sessionScope.role eq 'admin')&&not(requestScope.news eq null)}">
+     <security:authorize access="hasRole('ADMIN')">
+    <c:if test="${not(requestScope.news eq null)}">
         <div align="right">
 
             <input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/>
         </div>
     </c:if>
+      </security:authorize>	
+      </form:form>
     <br/>
     <div align="center">
         <c:if test="${requestScope.PageCount.size()>1}">
@@ -76,4 +81,4 @@
         <a href="${newsNumberLink5}">5</a>
         <a href="${newsNumberLink10}">10</a>
     </c:if>
-</form>
+

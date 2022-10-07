@@ -17,22 +17,7 @@ public class UserServiceImpl implements UserService {
     private IUserDAO userDAO;
 
     private final DataValidation.Builder validBuilder = new DataValidation.Builder();
-    private static final String messageInvalideAuthData = "invalid authorization data";
     private static final String messageInvalideRegData = "invalid registration data";
-
-    @Override
-    @Transactional
-    public UserInfo signIn(String login, String password) throws ServiceException {
-        if (!validBuilder.checkLogin(login).checkPassword(password).generateResult().isResult()) {
-            throw new ServiceException(messageInvalideAuthData);
-        }
-        try {
-            return userDAO.logination(login, password);
-
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
 
     @Override
     @Transactional
