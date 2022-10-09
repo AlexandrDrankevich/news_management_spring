@@ -17,7 +17,7 @@
                     <c:url var="newsLink" value="/newsList"/>
                     <a href="${newsLink}"> <spring:message code="local.loclink.name.list"/></a><br/>
                 </li>
-                	<security:authorize access="hasRole('ADMIN')">
+                	<security:authorize access="hasRole('ROLE_ADMIN')">
                     <li>
                         <c:url var="addNews" value="/news/addNewsForm"/>
                         <a href="${addNews}"><spring:message code="local.loclink.name.add"/></a>

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -34,13 +37,16 @@ public class RegistrationController {
     @RequestMapping("/do_registration")
     public String doRegistration(@ModelAttribute(userInfoAttribute) UserInfo newUserInfo, RedirectAttributes attr,
                                  Model model) {
-        String password = newUserInfo.getPassword();
-        String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        newUserInfo.setPassword(hashPassword);
+      String password = newUserInfo.getPassword();
+     String springPassword = "{noop}"+password;
+    newUserInfo.setPassword(springPassword);
         try {
-            UserRole defaultUserRole = new UserRole();
-            defaultUserRole.setId(2);
-            newUserInfo.setUserRole(defaultUserRole);
+        UserRole defaultUserRole = new UserRole();
+         defaultUserRole.setLogin(newUserInfo.getLogin());
+         defaultUserRole.setRole("ROLE_USER");
+         List<UserRole>userRoleList= new ArrayList<UserRole>();
+         userRoleList.add(defaultUserRole);
+         newUserInfo.setUserRole(userRoleList);  
             boolean result = service.registration(newUserInfo);
             if (result) {
                 attr.addAttribute(regResultMessageAttribute, regResultMessage);

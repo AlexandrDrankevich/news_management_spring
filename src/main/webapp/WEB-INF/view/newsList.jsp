@@ -25,13 +25,13 @@
                 </div>
                 <div class="news-link-to-wrapper">
                     <div class="link-position">
-                        <security:authorize access="hasRole('ADMIN')">
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
                             <a href="news/editNews/${news.idNews}"><spring:message
                                     code="local.loclink.name.edit"/>&nbsp </a>
                        </security:authorize>	
 
                         <a href="viewNews/${news.idNews}"><spring:message code="local.loclink.name.view"/></a>
-                        <security:authorize access="hasRole('ADMIN')">
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
                             <input type="checkbox" name="id" value="${news.idNews }"/>
                           </security:authorize>
                     </div>

@@ -28,7 +28,7 @@
                 <spring:message code="local.loctitle.name.welcome"/>
                 <br/>
            </security:authorize>	
-           	<security:authorize access="hasRole('USER')">
+           	<security:authorize access="hasRole('ROLE_USER')">
                 <c:import url="/WEB-INF/view/menu.jsp"/>
             </security:authorize>	
         </div>
@@ -38,7 +38,7 @@
                	<security:authorize access="hasRole('ROLE_ANONYMOUS')">
                     <c:import url="/WEB-INF/view/guestInfo.jsp"/>
               </security:authorize>	
-               	<security:authorize access="hasRole('USER')">
+               	<security:authorize access="hasRole('ROLE_USER')">
                     <c:import url="/WEB-INF/view/body.jsp"/>
                 </security:authorize>	
             </c:if>

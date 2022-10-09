@@ -45,7 +45,7 @@
             </div>
      </security:authorize>	
 
-        	<security:authorize access="hasRole('USER')">
+        	<security:authorize access="hasRole('ROLE_USER')">
 
             <div align="right">
             
@@ -55,12 +55,7 @@
 		<input type="submit" value="<spring:message code="local.locbutton.name.sign_out"/>" />
 	
 	</form:form>
-	
-	
-              <!--   <c:url var="signOut" value="/signOut"/>
-                <a href="${signOut}"> <input type="submit"
-         value="<spring:message code="local.locbutton.name.sign_out"/>"/><br/></a>-->
-                                             
+	                                             
                  <br/>                            
                 <c:if test="${not (param.newsMessage eq null)}">
                     <spring:message code="local.loctitle.name.news_saved"/>

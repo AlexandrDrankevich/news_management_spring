@@ -1,7 +1,11 @@
 package by.htp.ex.entity;
 
 import javax.persistence.*;
+
+
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,26 +21,27 @@ public class UserInfo implements Serializable {
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name = "login")
+    @Column(name = "username")
     private String login;
     @Column(name = "password")
     private String password;
     @Column(name = "birthday")
     private java.sql.Date birthday;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "roles_id")
-    private UserRole userRole;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn (name="id_user")
+    private List<UserRole> userRole;
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
+    public List<UserRole> getUserRole() {
+		return userRole;
+	}
 
-    public UserInfo() {
+	public void setUserRole(List<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+
+	public UserInfo() {
     }
 
     public java.sql.Date getBirthday() {

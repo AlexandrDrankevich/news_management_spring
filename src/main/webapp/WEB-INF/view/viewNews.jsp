@@ -49,7 +49,7 @@
     </table>
 </div>
 
-  <security:authorize access="hasRole('ADMIN')">
+  <security:authorize access="hasRole('ROLE_ADMIN')">
     <div class="first-view-button">
         <c:url var="editLink" value="/news/editNews/${requestScope.news.idNews }"> </c:url>
         <a href="${editLink}"><input type="submit" value="<spring:message code="local.locbutton.name.edit"/>"/></a>

@@ -22,8 +22,7 @@ public class UserDAO implements IUserDAO {
             if (isloginExist(currentSession, user.getLogin())) {
                 return false;
             }
-            System.out.println(user.getId());
-            currentSession.saveOrUpdate(user);
+            currentSession.save(user);
         } catch (Exception e) {
             throw new DaoException(e);
         }
