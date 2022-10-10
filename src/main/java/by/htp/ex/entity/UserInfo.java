@@ -1,9 +1,6 @@
 package by.htp.ex.entity;
 
 import javax.persistence.*;
-
-
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -28,20 +25,20 @@ public class UserInfo implements Serializable {
     @Column(name = "birthday")
     private java.sql.Date birthday;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn (name="id_user")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user")
     private List<UserRole> userRole;
 
 
     public List<UserRole> getUserRole() {
-		return userRole;
-	}
+        return userRole;
+    }
 
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
+    public void setUserRole(List<UserRole> userRole) {
+        this.userRole = userRole;
+    }
 
-	public UserInfo() {
+    public UserInfo() {
     }
 
     public java.sql.Date getBirthday() {

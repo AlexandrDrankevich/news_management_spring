@@ -29,5 +29,4 @@ public class BasePageController {
             return "error";
         }
     }
-
 }

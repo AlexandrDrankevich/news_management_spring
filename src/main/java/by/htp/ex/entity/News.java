@@ -21,11 +21,10 @@ public class News implements Serializable {
     private String content;
     @Column(name = "date")
     private java.sql.Date newsDate;
-    
+
     public News() {
     }
 
- 
     public Integer getIdNews() {
         return idNews;
     }
@@ -88,6 +87,6 @@ public class News implements Serializable {
     @Override
     public String toString() {
         return "News [idNews=" + idNews + ", title=" + title + ", briefNews=" + briefNews + ", content=" + content
-                + ", newsDate=" + newsDate +"]";
+                + ", newsDate=" + newsDate + "]";
     }
 }
