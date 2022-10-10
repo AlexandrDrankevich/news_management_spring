@@ -47,10 +47,10 @@
         </c:if>
     </div>
      <security:authorize access="hasRole('ADMIN')">
-    <c:if test="${not(requestScope.news eq null)}">
+    <c:if test="${not(requestScope.news eq null)}"> 
         <div align="right">
 
-            <input type="submit" value="<spring:message code="local.locbutton.name.delete"/>"/>
+            <input type="submit"  onclick="if (!(confirm('<spring:message code="local.clickDelete.text"/>'))) return false" value="<spring:message code="local.locbutton.name.delete"/>"/>
         </div>
     </c:if>
       </security:authorize>	
