@@ -29,7 +29,7 @@ public class NewsListController {
     private static final String sessionPageAttribute = "pageNumber";
 
     @RequestMapping("/newsList")
-    public String showNewsList(HttpServletRequest request, Model model,
+    public String showNewsList( Model model,
                                @RequestParam(value = newsCountParam, required = false) String newsCount,
                                @RequestParam(value = pageNumberParam, required = false) String page,
                                @SessionAttribute(value = sessionPageAttribute, required = false) String sessionPage,

@@ -49,11 +49,11 @@ public class NewsProcessingController {
     }
 
     @RequestMapping("/editNews/{id}")
-    public String showEditNewsForm(@PathVariable("id") String id, HttpServletRequest request, Model model) {
+    public String showEditNewsForm(@PathVariable("id") String id,  Model model) {
         try {
             News news = newsService.findById(Integer.parseInt(id));
             model.addAttribute(newsAttribute, news);
-            request.setAttribute(addNewsAttribute, editNewsStatus);
+            model.addAttribute(addNewsAttribute, editNewsStatus);
             model.addAttribute(editViewAttribute, editNewsStatus);
             return "baseLayout";
         } catch (ServiceException e) {

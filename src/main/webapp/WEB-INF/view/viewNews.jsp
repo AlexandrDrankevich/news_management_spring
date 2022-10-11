@@ -59,7 +59,7 @@
         <c:url var="deleteLink" value="/news/delete">
             <c:param name="id" value="${requestScope.news.idNews }"/></c:url>
         <a href="${deleteLink}"><input type="submit"  onclick="if (!(confirm('<spring:message code="local.clickDelete.text"/>'))) return false" 
-        yvalue="<spring:message code="local.locbutton.name.delete"/>"/></a>
+        value="<spring:message code="local.locbutton.name.delete"/>"/></a>
 
     </div>
   </security:authorize>	
